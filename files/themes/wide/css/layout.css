@@ -1,0 +1,130 @@
+/* 
+* Amazium V1.2
+* Copyright 2012, Mike Ballan
+* www.amazium.co.uk
+*/
+
+/***** Screen 960px *****/
+	
+	#tagline { position:relative; top:-200px; left:500px; width:400px; font:16px/1.25em "MyriadProSemibold",sans-serif; }
+	.wellcome { position:relative; top:-195px; left:220px; }
+	#header .grid_3.logo { padding-bottom:19px; position:relative; top:0; left:0; z-index:1; overflow:visible; }
+	#header .grid_3.logo img { width:260px; }
+	#header .grid_9.primary { position:relative; top:50px; left:0; z-index:0; }
+	#header .main-menu { padding-top:5px; } 
+	#header .root-icons ul { position:relative; top:0px; right:150px; }
+	#header .root-icons ul, #header .main-info ul { padding-left:15px; float:right; }
+	#header .root-icons ul li, #header .main-info ul li { padding:0 10px; }
+	nav#navigation { padding:7px 15px; }
+	nav#navigation select { display:none; }
+	nav ul li { padding-right:20px; }
+	.intro h1 { margin-top: 1em; margin-bottom: 1em; }
+	.intro h2 { margin-top: 2.5em; margin-bottom: 1em; } 
+	.place-info.intro .ce_image { margin-right: 0; }
+	.place-info.intro .intro-msg { margin:0; width:400px; height:293px; }
+	.place-info.intro .intro-msg p { padding:10px 20px 10px; font:bold 14px/1.5em Arial,sans-serif; }
+	.place-info.intro .intro-msg .quote { margin:5px 0 0 20px; }
+	.place-info.intro .intro-msg p.quote-content { font: italic 12px/1.2em Arial,sans-serif; font:14px/1.05em "MyriadProItalic",sans-serif; }
+	.place-info.intro .intro-msg .quote-bg { margin-left:100px; }
+	.mod_newsarchive .image_container { float:right; } 
+	.contact-form input { width:350px; }
+	.contact-form textarea { width:600px; }
+	#intmap_list table { font-size:10px; }
+	
+
+
+/***** Screen Bigger than 960px *****/
+@media only screen and (min-width:1200px) {
+	
+	#tagline { position:relative; top:-250px; left:650px; width:400px; }
+	.wellcome { position:relative; top:-245px; left:250px; }
+	#header .grid_3.logo { padding-bottom:24px; position:relative; top:0; left:0; z-index:1; overflow:visible; }
+	#header .grid_3.logo img { width:320px; }
+	#header .grid_9.primary { position:relative; top:70px; left:0; z-index:0; }
+	#header .root-icons ul { position:relative; top:0px; right:200px; }
+	#header .main-menu { padding-top:10px; }
+	nav ul li { padding-right:40px; }
+	.place-info.intro .intro-msg { margin:0; width:500px; height:366px; }
+	.place-info.intro .intro-msg p { padding:30px 20px 10px; font:bold 16px/2em Arial,sans-serif;}
+	.place-info.intro .intro-msg .quote { margin:15px 0 0 20px; }
+	.place-info.intro .intro-msg .quote-bg { margin-left:200px; }
+	.place-info.intro .intro-msg p.quote-content { font: italic 14px/1.25em Arial,sans-serif; font:14px/1.25em "MyriadProItalic",sans-serif; }
+	.contact-form textarea { width:700px; }
+	#intmap_list table { font-size:12px; } 
+}
+
+
+
+/***** Tablet (Smaller than 959px) *****/
+@media only screen and (min-width: 768px) and (max-width: 959px) {
+	
+	#tagline { position:relative; top:-150px; left:410px; width:300px; font-size:14px; }
+	.wellcome { position:relative; top:-145px; left:175px; }
+	#header .grid_3.logo { padding-bottom:34px; position:relative; top:0; left:0; z-index:1; overflow:visible; }
+	#header .grid_3.logo img { width:220px; }
+	#header .grid_9.primary { position:relative; top:40px; left:0; z-index:0; }
+	#header .root-icons ul { position:relative; top:0px; right:120px; }
+	#header .root-icons ul li, #header .main-info ul li { padding:0 5px; }
+	nav ul li { font-size:0.8em; padding:5px 10px 0; }
+	.intro h1 { margin-top:0.25em; margin-bottom: 0.5em; font-size:24px; }
+	.intro p { font-size:12px; }
+	.place-info.intro .intro-msg { margin:0; width:320px; height:231px; }
+	.place-info.intro .intro-msg p { padding:30px 20px 10px; font:bold 16px/1.5em Arial,sans-serif;}
+	.place-info.intro .intro-msg .quote { display:none; }
+	.place-info.intro .intro-msg .quote-bg { display:none; }
+	.place-info.intro .intro-msg .quote-author { display:none; }
+	.contact-form textarea { width:450px; }
+	#mapCollection h2 { padding-right:10px !important; }
+	#mapCollection li { padding-right:0.2em !important; }
+	#intmap_list { display:none; }
+}
+
+
+
+/***** Phone (portrait 300px) *****/
+@media only screen and (max-width: 767px) {
+	
+	#tagline { position:relative; top:0px; left:0px; width:auto; font-size:14px; }
+	.wellcome { position:relative; top:5px; left:0px; }
+	#header .root-icons ul { float:none; }
+	#header .grid_3.logo { padding-bottom:5px; overflow:visible; text-align:center; }
+	#header .grid_3.logo img { width:260px; }
+	#header .grid_9.main-info { text-align:center; }
+	#header .grid_9.main-info ul { float:none; padding:10px 0 0; }
+	#header .grid_9.primary { position:relative; top:0; left:0; }
+	nav#navigation { padding:0; }
+	nav#navigation ul { display: none; }	
+    nav#navigation select { display: block; min-width: 270px; }
+	.intro h1 { margin:0.5em 0 0.5em 0; }
+	.place-info.intro .ce_image { text-align:center; position:relative; top:0; left:-30px; overflow:visible; }
+	.place-info.intro .ce_image img.max-img { width:auto; }
+	.place-info.intro .intro-msg { margin:0; width:auto; height:auto; }
+	.mod_newsarchive .image_container { float:left; }
+	.contact-details .grid_9 { position:relative; left:-100px; overflow:visible; }
+	.contact-form .formbody { padding:10px; }
+	.contact-form input, .contact-form textarea { width:270px; }
+	#intmap_list { display:block; }
+	#intmap_list { display:none; }
+}
+
+
+	
+/***** Phone (landscape 420px) *****/
+@media only screen and (min-width: 480px) and (max-width: 767px) {
+	
+	#header .grid_9.main-info { text-align:left; }
+	#header .grid_9.main-info ul { float:right; padding:0 0 0 10px; }
+	#header .grid_9.primary { position:relative; top:0; left:0; }
+	nav#navigation select { display: block; min-width: 390px; }
+	.place-info.intro .ce_image { position:relative; top:0; left:0px; overflow:visible; }
+	.contact-form input, .contact-form textarea { width:400px; }	
+}
+
+
+
+/***** Retina *****/
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+
+.example								{ margin:0; padding:0; }
+
+}

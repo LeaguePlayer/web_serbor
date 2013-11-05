@@ -1,0 +1,111 @@
+@font-face {
+    font-family: 'MyriadProRegular';
+    src: url('myriadpro-r-webfont.eot');
+    src: url('myriadpro-r-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-r-webfont.woff') format('woff'),
+         url('myriadpro-r-webfont.ttf') format('truetype'),
+         url('myriadpro-r-webfont.svg#myriad_proregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MyriadProItalic';
+    src: url('myriadpro-it-webfont.eot');
+    src: url('myriadpro-it-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-it-webfont.woff') format('woff'),
+         url('myriadpro-it-webfont.ttf') format('truetype'),
+         url('myriadpro-it-webfont.svg#myriad_proitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+@font-face {
+    font-family: 'MyriadProSemibold';
+    src: url('myriadpro-semibold-webfont.eot');
+    src: url('myriadpro-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-semibold-webfont.woff') format('woff'),
+         url('myriadpro-semibold-webfont.ttf') format('truetype'),
+         url('myriadpro-semibold-webfont.svg#myriad_pro_lightbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MyriadProSemoboldItalic';
+    src: url('myriadpro-semiboldit-webfont.eot');
+    src: url('myriadpro-semiboldit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-semiboldit-webfont.woff') format('woff'),
+         url('myriadpro-semiboldit-webfont.ttf') format('truetype'),
+         url('myriadpro-semiboldit-webfont.svg#myriad_pro_lightbold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+@font-face {
+    font-family: 'MyriadProBold';
+    src: url('myriadpro-bold-webfont.eot');
+    src: url('myriadpro-bold-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-bold-webfont.woff') format('woff'),
+         url('myriadpro-bold-webfont.ttf') format('truetype'),
+         url('myriadpro-bold-webfont.svg#myriad_probold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MyriadProBoldItalic';
+    src: url('myriadpro-boldit-webfont.eot');
+    src: url('myriadpro-boldit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-boldit-webfont.woff') format('woff'),
+         url('myriadpro-boldit-webfont.ttf') format('truetype'),
+         url('myriadpro-boldit-webfont.svg#myriad_probold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+/* @font-face {
+    font-family: 'MyriadProCondensed';
+    src: url('myriadpro-cond-webfont.eot');
+    src: url('myriadpro-cond-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-cond-webfont.woff') format('woff'),
+         url('myriadpro-cond-webfont.ttf') format('truetype'),
+         url('myriadpro-cond-webfont.svg#myriad_pro_condregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MyriadProCondensedItalic';
+    src: url('myriadpro-condit-webfont.eot');
+    src: url('myriadpro-condit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-condit-webfont.woff') format('woff'),
+         url('myriadpro-condit-webfont.ttf') format('truetype'),
+         url('myriadpro-condit-webfont.svg#myriad_pro_conditalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'MyriadProCondensedBold';
+    src: url('myriadpro-boldcond-webfont.eot');
+    src: url('myriadpro-boldcond-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-boldcond-webfont.woff') format('woff'),
+         url('myriadpro-boldcond-webfont.ttf') format('truetype'),
+         url('myriadpro-boldcond-webfont.svg#myriad_pro_condbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'MyriadProCondensedBoldItalic';
+    src: url('myriadpro-boldcondit-webfont.eot');
+    src: url('myriadpro-boldcondit-webfont.eot?#iefix') format('embedded-opentype'),
+         url('myriadpro-boldcondit-webfont.woff') format('woff'),
+         url('myriadpro-boldcondit-webfont.ttf') format('truetype'),
+         url('myriadpro-boldcondit-webfont.svg#myriad_pro_condbold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+} */
