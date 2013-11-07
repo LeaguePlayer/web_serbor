@@ -10,7 +10,7 @@ return array(
     'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
     'name'=>'Новый сайт',
     'language' => 'ru',
-    'theme'=>'default',
+    'theme'=>'serbor',
     // preloading 'log' component
     'preload'=>array('log'),
 
@@ -26,7 +26,7 @@ return array(
     'modules'=>array(
         // uncomment the following to enable the Gii tool
 
-        /*'gii'=>array(
+        'gii'=>array(
             'class'=>'system.gii.GiiModule',
             'password'=>'qwe123',
             'ipFilters'=>array('127.0.0.1','::1'),
@@ -36,7 +36,7 @@ return array(
             //'import' => array(
             //	'appext.imagesgallery.GalleryBehavior',
             //),
-        ),*/
+        ),
         'admin'=>array(),
         'email'=>array(),
         'auth'=>array(),
@@ -117,6 +117,11 @@ return array(
             'rules'=>array(
                 'gii'=>'gii',
                 'admin'=>'admin/start/index',
+                '/news.htm'=>'news',
+                '<controller:photos|news>'=>'<controller>/index',
+                '<alias:[a-z-]+>'=>'page/view',
+                '<alias:[a-z-]+.htm>'=>'page/view',
+                //'xxx'=>'page/index',
                 '<controller:\w+>'=>'<controller>/index',
                 '<controller:\w+>/<id:\d+>'=>'<controller>/view',
                 '<controller:\w+>/<action:\w+>/<id:\d+>'=>'<controller>/<action>',
@@ -135,7 +140,7 @@ return array(
             'offset' => 0,
         ),
         'db'=>array(
-            'connectionString' => 'mysql:host=localhost;dbname=yii_magic_box',
+            'connectionString' => 'mysql:host=localhost;dbname=serbor',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => 'root',
@@ -153,11 +158,11 @@ return array(
                     'levels'=>'error, warning',
                 ),
                 ///*
-                array(
+                /*array(
                     'class'=>'CWebLogRoute',
                     'levels'=>'error, warning, trace, profile, info',
                     'enabled'=>true,
-                ),
+                ),*/
                 //*/
             ),
         ),
