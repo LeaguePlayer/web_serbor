@@ -179,7 +179,7 @@ class EActiveRecord extends CActiveRecord
     public function beforeSave()
     {
         $this->logUpdate();
-        if ( empty($this->sort) ) {
+        if (isset($this->sort) && empty($this->sort) ) {
             //print_r( Lists::model()->find(array('select'=>'MAX(sort) as max_sort')) );
             $this->sort = self::model(get_class($this))->find(array('select'=>'MAX(sort) as max_sort'))->max_sort + 1;
             //if ( !$this->sort ) $this->sort = 1;

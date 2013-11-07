@@ -21,6 +21,7 @@
 						array('label'=>'Список', 'url'=>"/admin/news/list"),
 					)),
 					array('label'=>'Галлерея', 'url'=>'/admin/photos/update/id/1'),
+					array('label'=>'Карта', 'url'=>'/admin/maps'),
 				)),
 			);
 		?>
