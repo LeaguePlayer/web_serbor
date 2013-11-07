@@ -5,7 +5,9 @@
 *
 * The followings are the available columns in table '{{areas}}':
     * @property integer $id
+    * @property string $name
     * @property integer $image_map_id
+    * @property string $coords
 */
 class Areas extends EActiveRecord
 {
@@ -19,8 +21,10 @@ class Areas extends EActiveRecord
     {
         return array(
             array('image_map_id', 'numerical', 'integerOnly'=>true),
+            array('name', 'length', 'max'=>255),
+            array('coords', 'safe'),
             // The following rule is used by search().
-            array('id, image_map_id', 'safe', 'on'=>'search'),
+            array('id, name, image_map_id, coords', 'safe', 'on'=>'search'),
         );
     }
 
@@ -36,18 +40,19 @@ class Areas extends EActiveRecord
     {
         return array(
             'id' => 'ID',
+            'name' => 'Название области',
             'image_map_id' => 'Карта',
+            'coords' => 'Координаты',
         );
     }
-
-
-
 
     public function search()
     {
         $criteria=new CDbCriteria;
 		$criteria->compare('id',$this->id);
+		$criteria->compare('name',$this->name,true);
 		$criteria->compare('image_map_id',$this->image_map_id);
+		$criteria->compare('coords',$this->coords,true);
         $criteria->order = 'sort';
 
         return new CActiveDataProvider($this, array(

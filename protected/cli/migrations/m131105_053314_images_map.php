@@ -38,6 +38,7 @@ class m131105_053314_images_map extends CDbMigration
 
         $this->createTable('{{areas}}', array(
             'id' => 'pk', // auto increment
+            'name' => "string COMMENT 'Название области'",
             'image_map_id' => "int COMMENT 'Карта'",
             'coords' => "text COMMENT 'Координаты'",
         ),

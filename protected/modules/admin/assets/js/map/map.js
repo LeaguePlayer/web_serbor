@@ -24,9 +24,16 @@ var MapControl = {
 	cc: false,			//move callback
 
 	//methods
-	init: function(map_id){
+	init: function(map_id, options){
 		var map = $('#' + map_id),
 			self = this;
+		var def = {
+			afterAddRegion: function(r){
+				console.log('add region', r);
+			}
+		};
+
+		self.options = $.extend(def, options);
 
 		self.mapOffset = map.offset();
 
@@ -112,7 +119,7 @@ var MapControl = {
 							}
 							self.stackPoints.pop().remove();
 							// self.stackPoints.pop().remove();
-						}else{
+						}else if(self.regions.length > 0){
 							self.regions.pop().remove();
 						}
 						self.drawRegion();
@@ -197,11 +204,14 @@ var MapControl = {
 			path = path.join(' ');
 			this.clearTrash();
 
-			//end point set
+			//end point set and add region
 			if(end){
-				self.regions.push(self.R.path(path));
+				var r = self.R.path(path);
+				self.regions.push(r);				
 				self.allClear();
 				self.drawAllRegions();
+				//triggered add
+				self.options.afterAddRegion(r);
 				return;
 			}
 			if(path.length > 0){
@@ -253,5 +263,12 @@ var MapControl = {
 };
 
 jQuery(document).ready(function(){
-	MapControl.init('map');
+	MapControl.init('map', {
+		afterAddRegion: function(r){
+			var coord = r.attr('path') + ''; //get path (str)
+			var area_row = $('.area-clone .row-fluid').clone();
+			$('#all-data').append(area_row);
+			console.log(r);
+		}
+	});
 });
