@@ -399,3 +399,44 @@ input[type="submit"]:hover, input[type="button"]:hover {
 #footer .footer-logo img {
 	float: right;
 }
+
+.width_520 {
+	width: 520px;
+	margin: 0px auto;
+}
+
+.width_520 .logo {
+	display: block;
+	width: 572px;
+	height: 280px;
+	background: url(../../images/logo_404.jpg) no-repeat center center;
+	margin-top: 100px;
+}
+
+.width_520 h5 {
+	font-family: Tahoma, sans-serif;
+	margin: 15px 0px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.width_520 .error_404 {
+	font-family: "MyriadProBold", sans-serif;
+	font-size: 48px;
+	color: #000;
+	text-transform: uppercase;
+}
+
+.width_520 .phone {
+	font-family: "MyriadProBold", sans-serif;
+	font-size: 26px;
+}
+
+.width_520 .phone span {
+	font-size: 18px;
+	color: #94999d;
+}
+
+.width_520 .description {
+	margin-left: 35px;
+}
