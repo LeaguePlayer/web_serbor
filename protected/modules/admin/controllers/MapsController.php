@@ -5,9 +5,6 @@ class MapsController extends AdminController
 
 	public function actionAreas($map){
 
-		//change layout
-		$this->layout = '/layouts/map_layout';
-
 		$all_areas = Areas::model()->findAll();
 
 		$area = new Areas;

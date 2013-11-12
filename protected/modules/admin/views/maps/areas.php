@@ -1,16 +1,14 @@
 <?php 
 $cs = Yii::app()->clientScript;
 
-$cs->registerCssFile($this->getAssetsUrl().'/js/map/summer/main.css') ;
+$cs->registerCssFile($this->getAssetsUrl().'/css/map/map.css') ;
 
-$cs->registerScriptFile($this->getAssetsUrl().'/js/map/summer/scripts.js', CClientScript::POS_END);
-// $cs->registerScriptFile($this->getAssetsUrl().'/js/map/raphael-pan-zoom/src/raphael.pan-zoom.min.js', CClientScript::POS_END);
-// $cs->registerScriptFile($this->getAssetsUrl().'/js/map/map.js', CClientScript::POS_END);
+$cs->registerScriptFile($this->getAssetsUrl().'/js/map/raphael.js', CClientScript::POS_END);
+$cs->registerScriptFile($this->getAssetsUrl().'/js/map/raphael-pan-zoom/src/raphael.pan-zoom.min.js', CClientScript::POS_END);
+$cs->registerScriptFile($this->getAssetsUrl().'/js/map/map.js', CClientScript::POS_END);
 ?>
 
 
-
-<?/*
 <h1>Управление участками</h1>
 
 <div class="row-fluid">
@@ -46,4 +44,4 @@ $cs->registerScriptFile($this->getAssetsUrl().'/js/map/summer/scripts.js', CClie
 			</form>
 	    </fieldset>
 	</div>
-</div>*/?>
+</div>
