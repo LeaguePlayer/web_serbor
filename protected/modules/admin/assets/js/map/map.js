@@ -1,7 +1,7 @@
 
 //Points class
 
-var Point = {
+/*var Point = {
 	setCoord: function(x, y){
 		this.x = x;
 		this.y = y;
@@ -9,12 +9,13 @@ var Point = {
 	formatPoint: function(s){
 		return [s, this.x, this.y].join(' ');
 	}
-}
+}*/
 
 //Map class
 
 var MapControl = {
 	//attr
+	R: null,			//Raphael obj
 	debug: true,		//debug mode
 	regions: [],		//storage all regions
 	stackPoints: [],	//temp stack points
@@ -28,7 +29,7 @@ var MapControl = {
 		var map = $('#' + map_id),
 			self = this;
 		var def = {
-			afterAddRegion: function(r){
+			afterAddRegion: function(r, context){
 				console.log('add region', r);
 			}
 		};
@@ -211,7 +212,7 @@ var MapControl = {
 				self.allClear();
 				self.drawAllRegions();
 				//triggered add
-				self.options.afterAddRegion(r);
+				self.options.afterAddRegion(r, self.R);
 				return;
 			}
 			if(path.length > 0){
@@ -262,13 +263,108 @@ var MapControl = {
 
 };
 
+// for front-end
+// render regions on the map
+function renderAreas(regions){
+	if(regions.length > 0){
+		var c = 0;
+
+		for (r_id in regions) {
+			var p = MapControl.R.path(regions[r_id]).attr({
+				'fill': 'green',
+				'stroke': 'white',
+				'fill-opacity': 0.6,
+				'stroke-linejoin': 'round',
+				'stroke-width': 1
+				//'stroke-width':"5"
+			});
+			$('.areas-block .area-row').eq(c).data('path', p);
+			console.log($('.area-row').eq(c));
+			c++;
+		}
+	}
+}
+
+
 jQuery(document).ready(function(){
+	var count = $('.areas-block .area-row').length;
+
 	MapControl.init('map', {
-		afterAddRegion: function(r){
+		afterAddRegion: function(r, context){
 			var coord = r.attr('path') + ''; //get path (str)
 			var area_row = $('.area-clone .row-fluid').clone();
-			$('#all-data').append(area_row);
-			console.log(r);
+
+			//init elements
+			area_row.find('.coords').val(coord);
+			area_row.data('path', r);
+
+			//set index for elements in Post array
+			area_row.find('input').each(function(){
+				var a = $(this).attr('name');
+				$(this).attr('name', a.replace('[]', '['+count+']'));
+			});
+			count++;
+			//add plot for area
+			/*area_row.find('.add-plot').on('click', function(){
+
+			});*/
+
+			$('.areas-block').append(area_row);
 		}
 	});
+
+	renderAreas(window.regions);
+
+	//send data
+	$('.save-all').on('click', function(){
+		var form = $('#all-data'),
+			data = form.serialize();
+
+		if(data.length > 0){
+			$.ajax({
+				url: form.attr('action'),
+				data: data,
+				type: 'POST',
+				success: function(data){
+					console.log(data);
+				}
+			});
+		}
+	});
+
+	//hover on row
+	$('.area-row').hover(function(){
+		var p = $(this).data('path');
+		console.log(p);
+		p.attr({'fill-opacity': 1, 'fill': 'white',});
+	}, function(){
+		var p = $(this).data('path');
+		p.attr({'fill-opacity': 0.6, 'fill': 'green'});
+	});
+
+	//remove area
+	$('.areas-block').on('click', '.remove-area', function(){
+		if(confirm('Вы уверены?')){
+			var row = $(this).closest('.area-row');
+			var area_id = row.data('area-id');
+			var rec_id = row.find('.id').val();
+
+			if(rec_id){ //old area, update
+				$.ajax({
+					url: row.data('deleteurl'),
+					type: 'GET',
+					success:function(res){
+						row.data('path').remove();
+						row.remove();
+					}
+				});
+			}else{
+				//MapControl.R.getById(area_id).remove();
+				row.data('path').remove();
+				row.remove();
+			}
+			
+		}
+	})
+
 });

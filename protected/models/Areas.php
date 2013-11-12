@@ -35,6 +35,12 @@ class Areas extends EActiveRecord
         );
     }
 
+    public function behaviors()
+    {
+        return array(
+        );
+    }
+
 
     public function attributeLabels()
     {
@@ -69,6 +75,4 @@ class Areas extends EActiveRecord
     {
         return 'Области';
     }
-
-
 }
