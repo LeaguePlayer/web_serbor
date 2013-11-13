@@ -35,6 +35,11 @@ class Plots extends EActiveRecord
         );
     }
 
+    public function behaviors()
+    {
+        return array(
+        );
+    }
 
     public function attributeLabels()
     {
@@ -47,9 +52,6 @@ class Plots extends EActiveRecord
             'status' => 'Статус',
         );
     }
-
-
-
 
     public function search()
     {

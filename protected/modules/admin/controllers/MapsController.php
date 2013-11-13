@@ -64,29 +64,45 @@ class MapsController extends AdminController
 		Yii::app()->end();
 	}
 
-	public function actionSave(){
-		if(isset($_POST['Areas'])){
-			foreach ($_POST['Areas'] as $d) {
-				$area = new Areas;
-				$area->attributes = $d;
 
-				if(isset($d['id'])){
-					$area = Areas::model()->findByPk($d['id']);
-					$area->attributes = $d;
+	//save area
+	public function actionAreaSave(){
+		if(isset($_POST['Areas'])){
+			$area = Areas::model()->findByPk($_POST['Areas']['id']);
+			$area->attributes = $_POST['Areas'];
+
+			$area->save(false);
+
+			if(isset($_POST['Plots'])){
+				foreach ($_POST['Plots'] as $p) {
+					if(isset($p['id'])){
+						$plot = Plots::model()->findByPk($p['id']);
+						$plot->attributes = $p;
+						$plot->save(false);
+					}else{
+						$plot = new Plots;
+						$plot->attributes = $p;
+						$plot->area_id = $area->id;
+						$plot->save(false);
+					}
 				}
-				//var_dump($area->isNewRecord);
-				$area->save();
 			}
+
+			$this->renderPartial('/areas/_plots', array('area' => $area));
 		}
 
 		Yii::app()->end();
 	}
 
-	public function actionDeleteArea($id){
-		if(isset($id)){
-			Areas::model()->findByPk($id)->delete();
-			echo 'ok';
+	//remove area and all her plots
+	public function actionRemoveArea($id){
+		$area = Areas::model()->findByPk($id);
+
+		foreach ($area->plots as $p) {
+			$p->delete();
 		}
+
+		$area->delete();
 
 		Yii::app()->end();
 	}

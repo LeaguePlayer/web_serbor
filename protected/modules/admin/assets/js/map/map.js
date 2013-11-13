@@ -277,26 +277,30 @@ var onArea = function(){
 var outArea = function(){
 	this.attr({'fill-opacity': 0.6, 'fill': 'green'});
 }
+
+//load area form
 var clickOnArea = function(){
 	var id = this.data('area-id');
+	var aOnMap = this;
+
 	$.ajax({
 		url: '/admin/maps/areaForm',
 		type: 'GET',
 		data: {id: id},
 		success: function(r){
 			$.fancybox.open(r);
-
+			var count = $('.plots tr').length;
 			//add plot
 			$('.area-block').on('click', '.add-plot', function(){
 				var clone = $('.plot-clone').clone();
-				var count = $('.plots tr').length;
-
+				
 				clone.find('input').each(function(){
 					var n = $(this).attr('name');
 					$(this).attr('name', n.replace('[]', '[' + count + ']'));
 				});
 				$('.plots').append(clone.removeClass().addClass('plot-tr').show(500));
 				$.fancybox.reposition();
+				count++;
 			});
 
 			//remove plots
@@ -304,10 +308,7 @@ var clickOnArea = function(){
 				if(confirm('Вы уверены?')){
 					var id = $(this).data('id'),
 						aid = $(this).data('area-id');
-
 					var tr = $(this).closest('.plot-tr');
-					
-					console.log(id, aid, tr);
 
 					if(id && aid){
 						$.ajax({
@@ -315,12 +316,50 @@ var clickOnArea = function(){
 							data: {id: id, aid: aid},
 							type: 'GET',
 							success: function(){
-								tr.hide();
+								tr.remove();
 							}
 						});
-					}else
-						tr.hide();
+					}else tr.remove();
+
 					$.fancybox.reposition();
+				}
+			});
+
+			//save area
+			$('.area-block').on('click', '.save-area', function(){
+				var button = $(this);
+				var form = $('#area-form');
+
+				$('.plot-clone').remove();
+				button.attr("disabled", "disabled");
+				$.ajax({
+					url: '/admin/maps/areaSave',
+					type: 'POST',
+					data: form.serialize(),
+					success: function(r){
+						var alert = jQuery('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Изменения сохранены</strong></div>');
+						button.removeAttr("disabled");
+						alert.hide();
+						$('.plots-block').html(r);
+						$('.alert-save').html(alert);
+						alert.slideDown();
+					}
+				});
+			});
+
+			//remove area
+			$('.area-block').on('click', '.remove-area', function(){
+				if(confirm('Вы уверены, что хотите удалить всю область и все ее участки?')){
+					var button = $(this).attr("disabled", "disabled");
+					$.ajax({
+						url: '/admin/maps/removeArea',
+						type: 'GET',
+						data: {id: $(this).data('id')},
+						success: function(){
+							$.fancybox.close();
+							aOnMap.remove();
+						}
+					});
 				}
 			});
 		}
