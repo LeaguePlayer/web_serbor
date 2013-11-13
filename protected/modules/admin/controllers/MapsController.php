@@ -5,6 +5,8 @@ class MapsController extends AdminController
 
 	public function actionAreas($map){
 
+		$this->layout = '/layouts/map_layout';
+
 		$all_areas = Areas::model()->findAll();
 
 		$area = new Areas;
@@ -21,6 +23,45 @@ class MapsController extends AdminController
 			'area' => $area,
 			'plot' => $plot
 		));
+	}
+
+	//for AJAX request
+	public function actionRemovePlot($id, $aid){
+		if($id && $aid){
+			$plot = Plots::model()->findByPk($id, 'area_id=:area_id', array(':area_id' => $aid));
+			$plot->delete();
+		}
+
+		Yii::app()->end();
+	}
+
+	//for AJAX request
+	public function actionAreaForm($id){
+		if(isset($id)){
+			$area = Areas::model()->findByPk($id);
+
+			$this->renderPartial('/areas/_form', array(
+				'model' => $area
+			));
+		}
+
+		Yii::app()->end();
+	}
+
+	//Create area, return ID new Area
+	public function actionCreateArea(){
+		if(isset($_POST['Areas'])){
+			$model = new Areas;
+			$model->attributes = $_POST['Areas'];
+
+			if($model->save()){
+				echo $model->id;
+				Yii::app()->end();
+			}
+		}
+
+		echo 0;
+		Yii::app()->end();
 	}
 
 	public function actionSave(){

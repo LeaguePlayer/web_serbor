@@ -1,16 +1,3 @@
-
-//Points class
-
-/*var Point = {
-	setCoord: function(x, y){
-		this.x = x;
-		this.y = y;
-	},
-	formatPoint: function(s){
-		return [s, this.x, this.y].join(' ');
-	}
-}*/
-
 //Map class
 
 var MapControl = {
@@ -21,13 +8,16 @@ var MapControl = {
 	stackPoints: [],	//temp stack points
 	trash: [],			//temp for other elements
 	tempC: false,		//temp path
+	cursorPoint: false, //follow to mouse cursore
 	move: false,		//move callback
 	cc: false,			//move callback
+	scroll: {},			//top, left pos scroll
 
 	//methods
 	init: function(map_id, options){
 		var map = $('#' + map_id),
 			self = this;
+
 		var def = {
 			afterAddRegion: function(r, context){
 				console.log('add region', r);
@@ -37,48 +27,57 @@ var MapControl = {
 		self.options = $.extend(def, options);
 
 		self.mapOffset = map.offset();
+		self.map = map;
 
-		var mW = map.width(),
-			mH = map.height(),
-			imageMap = map.find('img');
+		var imageMap = map.find('img'),
+			mapContainer = map.parent(),
+			mW = imageMap[0].naturalWidth,
+			mH = imageMap[0].naturalHeight;
+		// var imageMap = map.find('img'),
+		// 	mW = imageMap.width(),
+		// 	mH = imageMap.height();
 
-		self.move = function(e){
-			if(self.stackPoints.length > 0){
-				var coords = self.getCoord(e);
-				
-				if(self.tempC){
-					self.tempC.remove();
-					self.stackPoints.pop();
-					self.tempC = false;
-				}
-
-				self.tempC = self.R.circle(coords.x, coords.y, 2).attr({fill: "white"});
-				self.tempC.click(self.cc);
-				self.addPoint(self.tempC);
-				// self.drawRegion();
-			}
-		};
 
 		self.cc = function(e) { // click on circle
 			var c = self.getCoord(e);
-			var els = self.R.getElementsByPoint(c.x, c.y);
+			self.addPoint(self.R.circle(c.x, c.y, 1).attr({fill: "white"}));
+			/*var els = self.R.getElementsByPoint(c.x, c.y);
 
 			for (var i = els.items.length - 1; i >= 0; i--) {
 				if(els.items[i].type == 'image') {
 					els.items[i].events[0].f(e);
 				}
-			};
+			};*/
 		};
 
-		imageMap.hide();
+		self.move = function(e){
+			var coords = self.getCoord(e);
+			//self.drawRegion();
+			//if(!self.cursorPoint) self.cursorPoint = self.R.circle(coords.x, coords.y, 2).attr({fill: "white"});
+
+			//self.cursorPoint.attr({cx: coords.x, cy: coords.y});
+			// self.cursorPoint.mousemove(function(e){
+			// 	var coords = self.getCoord(e);
+			// 	self.cursorPoint.attr({cx: coords.x, cy: coords.y});
+			// });
+			/*self.cursorPoint.click(function(){
+				self.addPoint(this);
+			});*/
+		};
+
 
 		if(map.length && imageMap.length && Raphael){
+			imageMap.hide();
+			//console.log(imageMap.width());
+			//self.R = new ScaleRaphael(map_id, mW, mH);
+			// self.R.changeSize(mapContainer.width(), mapContainer.height());
 			self.R = Raphael(map_id, mW, mH);
-			self.panZoom = self.R.panzoom({ initialZoom: 1, initialPosition: { x: 120, y: 70} });
+			self.panZoom = self.R.panzoom({ initialZoom: 0, initialPosition: { x: 0, y: 0} });
 
 			self.panZoom.enable();
     		self.R.safari();
 
+    		//Zoom controls-----
     		$("#mapContainer #up").click(function (e) {
 		    	self.panZoom.zoomIn(1);
 		    	e.preventDefault();
@@ -88,20 +87,26 @@ var MapControl = {
 		    	self.panZoom.zoomOut(1);
 		    	e.preventDefault();
 		    });
+		    //------Zoom controls
 
+		    //Add image on svg
 			self.imageMap = self.R.image(imageMap.attr('src'), 0, 0, mW, mH);
 
 			//click on map (set point)
 			self.imageMap.mouseup(function(e){
 				if(!self.panZoom.isDragging()){
-					if(self.tempC){
-						//self.addPoint(self.tempC);
-						self.tempC = false;
-					}else{
-						var coords = self.getCoord(e);
-						var c = self.R.circle(coords.x, coords.y, 2).attr({fill: "white"});
-						self.addPoint(c);
-					}					
+					var c = self.getCoord(e);
+					self.addPoint(self.R.circle(c.x, c.y, 1).attr({fill: "white"}));
+					// var coords = self.getCoord(e);
+					// var c = self.R.circle(coords.x, coords.y, 1).attr({fill: "white"});
+					// self.addPoint(c);
+					// console.log(self.getCoord(e));
+					// if(self.tempC){
+					// 	//self.addPoint(self.tempC);
+					// 	self.tempC = false;
+					// }else{
+						
+					// }					
 				}
 			});
 
@@ -138,9 +143,8 @@ var MapControl = {
 			pos = $('image').position(),
 			curW = Math.round(self.R.width / am),
 			curH = Math.round(self.R.height / am);
-		
-		var left = (Math.abs(pos.left) + e.x - self.mapOffset.left) / curW;
-		var top = (Math.abs(pos.top) + e.y - self.mapOffset.top) / curH;
+		var left = (Math.abs(pos.left) + e.clientX - self.mapOffset.left + self.map.scrollLeft() + $('body').scrollLeft()) / curW;
+		var top = (Math.abs(pos.top) + e.clientY - self.mapOffset.top + self.map.scrollTop() + $('body').scrollTop()) / curH;
 
 		left = left * self.R.width;
 		top = top * self.R.height;
@@ -150,6 +154,7 @@ var MapControl = {
 	addPoint: function(point){
 		var self = this;
 
+		point.mousemove(self.move);
 		self.stackPoints.push(point);
 		//if add 1st point, then bind callbacks
 		if(self.stackPoints.length == 1){
@@ -216,8 +221,8 @@ var MapControl = {
 				return;
 			}
 			if(path.length > 0){
-				self.trash.push(self.R.path(path));
 				self.trash.push(self.R.path(path).attr({'fill': 'blue', 'fill-opacity': 0.6}).mousemove(self.move).mouseup(self.cc));
+				//self.trash.push(self.R.path(path).attr({'fill': 'blue', 'fill-opacity': 0.6}).mousemove(self.move).mouseup(self.cc));
 				self.stackPoints[0].toFront();
 			}
 		}
@@ -225,11 +230,12 @@ var MapControl = {
 	drawAllRegions: function(){
 		for (var i = this.regions.length - 1; i >= 0; i--) {
 			this.regions[i].attr({
-				'fill': 'white',
-				'stroke': 'red',
+				'fill': 'green',
+				'stroke': 'white',
 				'fill-opacity': 0.6,
 				'stroke-linejoin': 'round',
-				'stroke-width': 3
+				'stroke-width': 1,
+				'cursor' : 'pointer'
 				//'stroke-width':"5"
 			});
 		};
@@ -263,24 +269,82 @@ var MapControl = {
 
 };
 
+
+//callbacks for areas
+var onArea = function(){
+	this.attr({'fill-opacity': 1, 'fill': 'white'});
+}
+var outArea = function(){
+	this.attr({'fill-opacity': 0.6, 'fill': 'green'});
+}
+var clickOnArea = function(){
+	var id = this.data('area-id');
+	$.ajax({
+		url: '/admin/maps/areaForm',
+		type: 'GET',
+		data: {id: id},
+		success: function(r){
+			$.fancybox.open(r);
+
+			//add plot
+			$('.area-block').on('click', '.add-plot', function(){
+				var clone = $('.plot-clone').clone();
+				var count = $('.plots tr').length;
+
+				clone.find('input').each(function(){
+					var n = $(this).attr('name');
+					$(this).attr('name', n.replace('[]', '[' + count + ']'));
+				});
+				$('.plots').append(clone.removeClass().addClass('plot-tr').show(500));
+				$.fancybox.reposition();
+			});
+
+			//remove plots
+			$('.area-block').on('click', '.remove-plot', function(){
+				if(confirm('Вы уверены?')){
+					var id = $(this).data('id'),
+						aid = $(this).data('area-id');
+
+					var tr = $(this).closest('.plot-tr');
+					
+					console.log(id, aid, tr);
+
+					if(id && aid){
+						$.ajax({
+							url: '/admin/maps/removePlot',
+							data: {id: id, aid: aid},
+							type: 'GET',
+							success: function(){
+								tr.hide();
+							}
+						});
+					}else
+						tr.hide();
+					$.fancybox.reposition();
+				}
+			});
+		}
+	});
+}
+
 // for front-end
 // render regions on the map
 function renderAreas(regions){
 	if(regions.length > 0){
-		var c = 0;
 
 		for (r_id in regions) {
-			var p = MapControl.R.path(regions[r_id]).attr({
+			var p = MapControl.R.path(regions[r_id].coords).attr({
 				'fill': 'green',
 				'stroke': 'white',
 				'fill-opacity': 0.6,
 				'stroke-linejoin': 'round',
-				'stroke-width': 1
+				'stroke-width': 1,
+				'cursor' : 'pointer'
 				//'stroke-width':"5"
-			});
-			$('.areas-block .area-row').eq(c).data('path', p);
-			console.log($('.area-row').eq(c));
-			c++;
+			}).data('area-id', regions[r_id].id);
+
+			p.click(clickOnArea);
+			p.hover(onArea, outArea);
 		}
 	}
 }
@@ -291,10 +355,23 @@ jQuery(document).ready(function(){
 
 	MapControl.init('map', {
 		afterAddRegion: function(r, context){
-			var coord = r.attr('path') + ''; //get path (str)
-			var area_row = $('.area-clone .row-fluid').clone();
+			var coords = r.attr('path') + ''; //get path (str)
+			r.hover(onArea, outArea);
 
-			//init elements
+			$.ajax({
+				url: '/admin/maps/createArea',
+				type: 'POST',
+				data: {Areas:{coords: coords, image_map_id: $('#map').data('map-id')}},
+				success: function(id){
+					id = parseInt(id);
+					if(id > 0){
+						r.data('area-id', id);
+						r.click(clickOnArea);
+					}
+				}
+			});
+
+			/*//init elements
 			area_row.find('.coords').val(coord);
 			area_row.data('path', r);
 
@@ -303,13 +380,13 @@ jQuery(document).ready(function(){
 				var a = $(this).attr('name');
 				$(this).attr('name', a.replace('[]', '['+count+']'));
 			});
-			count++;
+			count++;*/
 			//add plot for area
 			/*area_row.find('.add-plot').on('click', function(){
 
 			});*/
 
-			$('.areas-block').append(area_row);
+			//$('.areas-block').append(area_row);
 		}
 	});
 
@@ -342,8 +419,7 @@ jQuery(document).ready(function(){
 		p.attr({'fill-opacity': 0.6, 'fill': 'green'});
 	});
 
-	//remove area
-	$('.areas-block').on('click', '.remove-area', function(){
+	/*$('.plots-block').on('click', '.add-plot', function(){
 		if(confirm('Вы уверены?')){
 			var row = $(this).closest('.area-row');
 			var area_id = row.data('area-id');
@@ -365,6 +441,6 @@ jQuery(document).ready(function(){
 			}
 			
 		}
-	})
+	});*/
 
 });

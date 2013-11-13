@@ -1,18 +1,36 @@
-<?
-	$index = isset($index) ? $index : '';
-?>
-<div class="row-fluid area-row" data-deleteUrl="<?=$this->createUrl('maps/deleteArea', array('id' => $model->id))?>">
-	<div class="span8">
-	<?php echo CHtml::activeTextField($model,"[$index]name",array('size'=>60,'maxlength'=>255)); ?>
+<div class="container area-block">
+	<div class="row">
+		<div class="span12">
+			<?php $form = $this->beginWidget('CActiveForm', array(
+			    'id'=>'area-form',
+			    'enableAjaxValidation'=>true,
+			    'enableClientValidation'=>true,
+			    'focus'=>array($model,'name'),
+			)); ?>
 
-	<?php echo CHtml::activeHiddenField($model,"[$index]coords",array('class'=> 'coords')); ?>
-	<?php echo CHtml::activeHiddenField($model,"[$index]image_map_id"); ?>
-	<?php if(isset($model->id)){ echo CHtml::activeHiddenField($model,"[$index]id",array('class'=> 'id')); }?>
-	<?php //echo CHtml::activeHiddenField($model,"[$index]id",array('class'=> 'id')); ?>
-	<?php //echo CHtml::activeHiddenField($model,"[$index]new",array('class'=> 'new')); ?>
-	</div>
-	<div class="span4">
-		<?php echo TbHtml::button(TbHtml::icon(TbHtml::ICON_PLUS), array('title' => 'Добавить участок', 'class' => 'add-plot')); ?>
-		<?php echo TbHtml::button(TbHtml::icon(TbHtml::ICON_REMOVE, array('class' => 'icon-white')), array('color' => TbHtml::BUTTON_COLOR_DANGER, 'title' => 'Удалить область', 'class' => 'remove-area')); ?>
+			<div class="row">
+				<div class="span6">
+					<?php echo $form->labelEx($model,'name'); ?>
+					<?php echo $form->textField($model,'name'); ?>
+				</div>
+				<div class="span6">
+					<div class="pull-right">
+			            <?=TbHtml::button('Добавить участок', array('class' => 'add-plot')); ?>
+			            <?=TbHtml::button('Удалить', array('color' => TbHtml::BUTTON_COLOR_DANGER, 'class' => 'remove-area')); ?>
+			            <?=TbHtml::button('Сохранить', array('color' => TbHtml::BUTTON_COLOR_SUCCESS, 'class' => 'save-area')); ?>
+			        </div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<h4>Участки</h4>
+					<div class="row plots-block">
+						<? $this->renderPartial('/areas/_plots', array('area' => $model));?>
+					</div>
+				</div>
+			</div>			
+
+			<?php $this->endWidget(); ?>
+		</div>
 	</div>
 </div>
