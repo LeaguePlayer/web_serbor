@@ -54,7 +54,6 @@ body{
 }
 
 .tip_plots {
-	width: 385px;
 	position: absolute;
 	background-color: #fff;
 	border-radius: 4px;
@@ -63,7 +62,7 @@ body{
 	color: #000;
 	font-family: Tahoma, sans-serif;
 	box-shadow: 0px 3px 10px 0px #000;
-	display: none
+	display: none;
 }
 
 .tip_plots ul {
@@ -71,7 +70,7 @@ body{
 	margin: 0px;
 	display: inline-block;
 	vertical-align: top;
-	border-right: 1px solid #e6e6e6;
+	/*border-right: 1px solid #e6e6e6;*/
 }
 
 .tip_plots ul li a {
@@ -94,13 +93,13 @@ body{
 .tip_plots .plots_details {
 	display: inline-block;
 	vertical-align: top;
-	padding: 15px;
 }
 
 .tip_plots .plots_details .plot {
 	display: none;
 	overflow: hidden;
-	position: absolute;
+	border-left: 1px solid #e6e6e6;
+	padding: 15px;
 }
 
 .tip_plots .plots_details .plot .plot_number {
@@ -155,7 +154,6 @@ body{
 }
 
 .tip_plots .plots_details .reserve_button {
-	position: absolute;
 	bottom: 15px;
 }
 

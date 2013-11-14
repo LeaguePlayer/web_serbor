@@ -30,6 +30,8 @@ var InitMap = {
 				self.paper.changeSize(row.width()-22, row.height()-22, false, true);
 			});
 
+			$('body').append("<div class='trash'></div>");
+
 			//draw areas
 			if(areas.length){
 				for(i in areas){
@@ -56,6 +58,76 @@ var InitMap = {
 							box.hover(function(){}, function(){
 								$(this).hide(200);
 							});
+
+							//handle click on link
+							box.find('a').on('click', function(){
+								var id = $(this).data('area-id');
+
+								var mapWidth = $('#map').width();
+								var mapHeight = $('#map').height();
+								var scrWidth = $(window).width();
+								var scrHeight = $(window).height();
+								var mapTop = $('#map').offset().top;
+
+								var plotsWidth;
+								var plotsHeight;
+								var leftPos;
+								var topPos;
+
+								$('.tip_count').append("<img src='/themes/serbor/assets/images/ajax-loader.gif' style='float: right'>");
+								$('.trash').html('');
+								$.ajax({
+									url: '/map/areaDetail',
+									data: {id: id},
+									type: 'GET',
+									success: function(result){
+
+										leftPos = scrWidth/2 - 150;
+										topPos = scrHeight/2 - 100;
+										var b = $(result).css({'left': leftPos, 'top': topPos});
+										
+										$('.trash').append(b);
+										$('.plots_details .plot:eq(0)').show();
+
+										plotsWidth = $('.tip_plots').width();
+										plotsHeight = $('.tip_plots').height();
+										leftPos = scrWidth/2 - plotsWidth/2;
+										topPos = mapHeight/2 - plotsHeight/2 + mapTop;
+
+										b.css({'left': leftPos, 'top': topPos});
+
+										$('.tip_plots').show(200);
+										$('.tip_count').find('img').remove();
+
+										$('.tip_area').fadeOut();
+
+										b.find('.plots_list li').on('click', function () {	
+
+											var index = $(this).index();
+									        var link = $('.tip_plots .plots_list li').eq(index);
+									        var href = link.find('a');
+
+									        if (!href.is('.current')) {
+									            $('.tip_plots .plots_list li a').removeClass('current');
+									            href.addClass('current');
+									            $('.tip_plots .plots_details .plot:visible').hide();
+									            $('.tip_plots .plots_details .plot').eq(index).show();
+
+									        }
+									        return false;
+					    				});
+
+					    				$('#map').click(function(){
+					    					$('.tip_plots').fadeOut(300);
+					    				});
+
+									},
+									error: function(){
+										$('.tip_count').find('img').remove();
+									}
+								});
+								return false;
+							}); 
 						});
 						/*a.hover(function(e){
 							console.log(this.data('area-id'));
@@ -67,7 +139,8 @@ var InitMap = {
 							// $('.area-' + this.data('area-id')).show();
 						}, function(){
 							//$('.area-' + this.data('area-id')).hide();
-						});*/
+						});*/					 
+
 					}
 				}
 			}
