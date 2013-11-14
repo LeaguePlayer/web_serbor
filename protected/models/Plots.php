@@ -79,5 +79,16 @@ class Plots extends EActiveRecord
         return 'Участки';
     }
 
+    public static function getStatus($i){
+        $statuses = Plots::getStatuses();
+        
+        return isset($statuses[$i]) ? $statuses[$i] : $statuses[0];
+    }
 
+    public static function getStatuses(){
+        return array(
+            0 => 'Свободен',
+            1 => 'Занят'
+        );
+    }
 }

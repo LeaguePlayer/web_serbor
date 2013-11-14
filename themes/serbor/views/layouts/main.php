@@ -41,7 +41,7 @@
 	    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	    <![endif]-->
 	</head>
-	<body id="top" class="win chrome ch29" style="">				
+	<body id="top" class="ch29" style="">				
     	<div id="wrapper">
 			<?php echo $content;?>
 		</div>

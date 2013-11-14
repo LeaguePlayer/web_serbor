@@ -1,0 +1,11 @@
+#mapContainer{
+	border: 1px solid #266b3c;
+}
+#map{
+	border: 10px solid #aaa;
+	overflow: hidden;
+}
+#map img{
+	width: 100%;
+	float: left;
+}

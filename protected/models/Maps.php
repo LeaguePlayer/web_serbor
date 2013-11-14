@@ -29,6 +29,7 @@ class Maps extends EActiveRecord
     public function relations()
     {
         return array(
+            'areas'=>array(self::HAS_MANY, 'Areas', 'image_map_id'),
         );
     }
 

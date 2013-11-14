@@ -20,8 +20,8 @@
 					</td>
 					<td><?=CHtml::textField("Plots[$k][sq]", $plot->sq);?></td>
 					<td><?=CHtml::textField("Plots[$k][price]", $plot->price);?></td>
-					<td><?=CHtml::textField("Plots[$k][status]", $plot->status);?></td>
-					<td><?=TbHtml::button(TbHtml::icon(TbHtml::ICON_MINUS, array('class' => 'icon-white')), array(
+					<td><?=CHtml::dropDownList("Plots[$k][status]", $plot->status, Plots::getStatuses());?></td>
+					<td><?=TbHtml::button(TbHtml::icon(TbHtml::ICON_REMOVE, array('class' => 'icon-white')), array(
 						'color' => TbHtml::BUTTON_COLOR_DANGER, 
 						'class'=>'remove-plot', 
 						'title' => 'Удалить', 
@@ -37,8 +37,8 @@
 				<td><?=CHtml::textField("Plots[][num]");?></td>
 				<td><?=CHtml::textField("Plots[][sq]");?></td>
 				<td><?=CHtml::textField("Plots[][price]");?></td>
-				<td><?=CHtml::textField("Plots[][status]", 0);?></td>
-				<td><?=TbHtml::button(TbHtml::icon(TbHtml::ICON_MINUS, array('class' => 'icon-white')), array(
+				<td><?=CHtml::dropDownList("Plots[][status]", 0, Plots::getStatuses());?></td>
+				<td><?=TbHtml::button(TbHtml::icon(TbHtml::ICON_REMOVE, array('class' => 'icon-white')), array(
 					'color' => TbHtml::BUTTON_COLOR_DANGER, 
 					'class'=>'remove-plot', 
 					'title' => 'Удалить'));

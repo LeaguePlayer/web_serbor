@@ -11,6 +11,7 @@
 */
 class Areas extends EActiveRecord
 {
+
     public function tableName()
     {
         return '{{areas}}';
@@ -32,7 +33,7 @@ class Areas extends EActiveRecord
     public function relations()
     {
         return array(
-            'plots'=>array(self::HAS_MANY, 'Plots', 'area_id'),
+            'plots'=>array(self::HAS_MANY, 'Plots', 'area_id', 'order' => 'num'),
         );
     }
 
@@ -75,5 +76,45 @@ class Areas extends EActiveRecord
     public function translition()
     {
         return 'Области';
+    }
+
+    //exists plots or not
+    public function isEmpty(){
+        return empty($this->plots);
+    }
+
+    //reserve all plots or not
+    public function isReserve(){
+        foreach ($this->plots as $pl) {
+            if($pl->status == 0) return false;
+        }
+        return true;
+    }
+
+    //countPlots
+    public function getCountPlots(){
+        return count($this->plots);
+    }
+
+    //count freePLots
+    public function getFreePlots(){
+        $free = 0;
+        foreach ($this->plots as $pl) {
+            if($pl->status == 0) $free++;
+        }
+        return $free;
+    }
+
+    //get square
+    public function getSquare(){
+        $max = -1;
+        $min = 9999999;
+
+        foreach ($this->plots as $pl) {
+            if($min > $pl->sq) $min = $pl->sq;
+            if($max < $pl->sq) $max = $pl->sq;
+        }
+
+        return ($min == $max) ? $min.' кв.м.' : $min.' - '.$max.' кв.м.';
     }
 }

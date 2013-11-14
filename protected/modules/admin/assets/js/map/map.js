@@ -164,7 +164,7 @@ var MapControl = {
 			});
 			point.mouseover(function(e){
 				this.attr({fill: "red"});
-				if(self.stackPoints.length > 1){
+				/*if(self.stackPoints.length > 1){
 					if(self.tempC){
 						self.tempC.remove();
 						self.stackPoints.pop();
@@ -173,14 +173,14 @@ var MapControl = {
 					self.stackPoints.push(this);
 					self.tempC = false;
 					self.drawRegion();
-				}
+				}*/
 			});
-			point.mouseover(function(e){
+			point.mouseout(function(e){
 				this.attr({fill: "white"});
-				if(self.stackPoints.length > 1){
+				/*if(self.stackPoints.length > 1){
 					self.stackPoints.pop();
 					self.drawRegion();
-				}
+				}*/
 			});
 		}
 
@@ -294,10 +294,11 @@ var clickOnArea = function(){
 			$('.area-block').on('click', '.add-plot', function(){
 				var clone = $('.plot-clone').clone();
 				
-				clone.find('input').each(function(){
+				clone.find('input, select').each(function(){
 					var n = $(this).attr('name');
 					$(this).attr('name', n.replace('[]', '[' + count + ']'));
 				});
+				
 				$('.plots').append(clone.removeClass().addClass('plot-tr').show(500));
 				$.fancybox.reposition();
 				count++;
