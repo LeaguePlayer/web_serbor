@@ -13,6 +13,15 @@ class MapController extends FrontController
 		));
 	}
 
+	public function actionAreaDetail($id){
+		if($id){
+			$area = Areas::model()->findByPk($id);
+			$this->renderPartial('_area_detail', array('area' => $area));
+		}
+
+		Yii::app()->end();
+	}
+
 	public function filters()
 	{
 		return array(
@@ -25,7 +34,7 @@ class MapController extends FrontController
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index'),
+				'actions'=>array('index', 'areaDetail'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users
