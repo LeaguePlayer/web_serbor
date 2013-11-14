@@ -11,9 +11,12 @@
 <?php if($map): ?>
 	<div class="row">
 		<div id="mapContainer">
-			<div id="map"><img src="/media/images/maps/<?=$map->img_map?>" alt=""></div>
+			<div id="map">
+				<img src="/media/images/maps/<?=$map->img_map?>" alt="">
+			</div>
 		</div>
 	</div>
+	<div class="areas">
 	<?php
 		$cs->registerScript('init', 'var regions = [];', CClientScript::POS_END);
 
@@ -22,9 +25,15 @@
 				if($a->isReserve())
 					$cs->registerScript('area'.$a->id, "regions.push({id: $a->id, coords: '$a->coords', reserve: true});");
 				else{
-					$cs->registerScript('area'.$a->id, "regions.push({id: $a->id, coords: '$a->coords', reserve: false});");
-
-					/*var_dump($a->id);
+					$cs->registerScript('area'.$a->id, "regions.push({id: $a->id, coords: '$a->coords', reserve: false});");?>
+                    <div class="tip_area area-<?=$a->id?>">
+                        <p class="tip_count">Участков: <?=$a->countplots?></p>
+                        <hr>
+                        <p class="tip_free">Свободно: <?=$a->freeplots?></p>
+                        <p class="tip_size">Площадь: <?=$a->square?></p>
+                        <a href="#">Перейти к бронированию</a>
+                    </div>
+					<?/*var_dump($a->id);
 					var_dump($a->countplots);
 					var_dump($a->freeplots);
 					var_dump($a->square);*/
@@ -33,4 +42,5 @@
 				
 		}
 	?>
+	</div>
 <? endif; ?>

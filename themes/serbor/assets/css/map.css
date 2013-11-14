@@ -1,3 +1,6 @@
+body{
+	position: relative;
+}
 #mapContainer{
 	border: 1px solid #266b3c;
 }
@@ -8,4 +11,164 @@
 #map img{
 	width: 100%;
 	float: left;
+}
+
+.tip_area {
+	width: 210px;
+	padding: 15px 15px 18px 15px;
+	position: absolute;
+	background-color: #fff;
+	border-radius: 4px;
+	left: 200px;
+	top: 50px;
+	color: #000;
+	font-family: Tahoma, sans-serif;
+	box-shadow: 0px 3px 10px 0px #000;
+	display: none;
+	z-index: 10;
+}
+
+.tip_area .tip_count {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.tip_area hr {
+	color: #e6e6e6;
+	margin: 13px 0px;
+}
+
+.tip_area .tip_free {
+	font-size: 12px;
+	color: #266b3c;
+}
+
+.tip_area .tip_size {
+	font-size: 12px;
+}
+
+.tip_area a {
+	font-size: 12px;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+.tip_plots {
+	width: 385px;
+	position: absolute;
+	background-color: #fff;
+	border-radius: 4px;
+	left: 200px;
+	top: 250px;
+	color: #000;
+	font-family: Tahoma, sans-serif;
+	box-shadow: 0px 3px 10px 0px #000;
+	display: none
+}
+
+.tip_plots ul {
+	padding: 15px;
+	margin: 0px;
+	display: inline-block;
+	vertical-align: top;
+	border-right: 1px solid #e6e6e6;
+}
+
+.tip_plots ul li a {
+	color: #a2a2a2;
+	font-size: 14px;
+	line-height: 1.6;
+}
+
+.tip_plots ul li .current {
+	color: #000 !important;
+	pointer-events: none;
+	cursor: default;
+	text-decoration: none;
+}
+
+.tip_plots ul li .free {
+	color: #266b3c;
+}
+
+.tip_plots .plots_details {
+	display: inline-block;
+	vertical-align: top;
+	padding: 15px;
+}
+
+.tip_plots .plots_details .plot {
+	display: none;
+	overflow: hidden;
+	position: absolute;
+}
+
+.tip_plots .plots_details .plot .plot_number {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.tip_plots .plots_details .plot .plot_status {
+	font-weight: bold;
+	color: #266b3c;
+}
+
+.tip_plots .plots_details .plot .busy {
+	color: #ff3600;
+}
+
+.tip_plots .plots_details .plot b {
+	font-weight: bold;
+}
+
+.reserve_button {
+	background: rgb(19,144,34); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(19,144,34,1) 0%, rgba(38,107,51,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(19,144,34,1)), color-stop(100%,rgba(38,107,51,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(19,144,34,1) 0%,rgba(38,107,51,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(19,144,34,1) 0%,rgba(38,107,51,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(19,144,34,1) 0%,rgba(38,107,51,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(19,144,34,1) 0%,rgba(38,107,51,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#139022', endColorstr='#266b33',GradientType=0 ); /* IE6-9 */
+	border-radius: 3px;
+	border-bottom: 1px solid #174927;
+	line-height: 3;
+	display: inline-block;
+	font-size: 14px;
+	color: #fff !important;
+	font-weight: bold;
+	text-shadow: 1px 1px 1px #124119;
+	padding: 0px 13px;
+	text-transform: uppercase;
+	text-decoration: none !important;
+}
+
+.reserve_button:hover {
+	background: rgb(78,168,0); /* Old browsers */
+	background: -moz-linear-gradient(top,  rgba(78,168,0,1) 3%, rgba(47,124,46,1) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(3%,rgba(78,168,0,1)), color-stop(100%,rgba(47,124,46,1))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top,  rgba(78,168,0,1) 3%,rgba(47,124,46,1) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top,  rgba(78,168,0,1) 3%,rgba(47,124,46,1) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(top,  rgba(78,168,0,1) 3%,rgba(47,124,46,1) 100%); /* IE10+ */
+	background: linear-gradient(to bottom,  rgba(78,168,0,1) 3%,rgba(47,124,46,1) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4ea800', endColorstr='#2f7c2e',GradientType=0 ); /* IE6-9 */
+}
+
+.tip_plots .plots_details .reserve_button {
+	position: absolute;
+	bottom: 15px;
+}
+
+.point {
+	position: absolute;
+	display: block;
+	width: 45px;
+	height: 60px;
+	background-color: RGBA(255, 255, 255, 0.3);
+}
+
+.point:hover {
+	background-color: RGBA(255, 255, 255, 0.6);
+	cursor: pointer;
+	border: 1px solid RGBA(255, 0, 0, 0.5);
 }

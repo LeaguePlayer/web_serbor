@@ -35,7 +35,7 @@ var InitMap = {
 				for(i in areas){
 					var color = areas[i].reserve ? 'red' : 'green';
 
-					self.paper.path(areas[i].coords).attr({
+					var a = self.paper.path(areas[i].coords).attr({
 						'fill': color,
 						'stroke': 'white',
 						'fill-opacity': 0.6,
@@ -44,6 +44,31 @@ var InitMap = {
 						'cursor' : 'pointer'
 						//'stroke-width':"5"
 					});
+
+					a.data('area-id', areas[i].id);
+
+					if(!areas[i].reserve) {
+						a.click(function(e){
+							var box = $('.area-' + this.data('area-id')).remove();
+							$('body').append(box);
+							box.css({left: e.pageX - 20, top: e.pageY - 30}).show(200);
+
+							box.hover(function(){}, function(){
+								$(this).hide(200);
+							});
+						});
+						/*a.hover(function(e){
+							console.log(this.data('area-id'));
+
+							var box = $('.area-' + this.data('area-id')).remove();
+							$('body').append(box);
+							box.css({left: e.x - 100, top: e.y - 100}).show();
+
+							// $('.area-' + this.data('area-id')).show();
+						}, function(){
+							//$('.area-' + this.data('area-id')).hide();
+						});*/
+					}
 				}
 			}
 		};
