@@ -31,7 +31,7 @@
                         <hr>
                         <p class="tip_free">Свободно: <?=$a->freeplots?></p>
                         <p class="tip_size">Площадь: <?=$a->square?></p>
-                        <a href="#">Перейти к бронированию</a>
+                        <a href="#" data-area-id="<?=$a->id?>">Перейти к бронированию</a>
                     </div>
 					<?/*var_dump($a->id);
 					var_dump($a->countplots);

@@ -8,11 +8,13 @@
     <?php foreach ($area->plots as $pl):?>
         <div class="plot" data-id="<?=$pl->id?>">
             <p class="plot_number">№ <?=CHtml::encode($pl->num)?></p>
-            <p class="plot_status busy"><?=CHtml::encode(Plots::getStatus($pl->status))?></p>
+            <p class="plot_status <?=($pl->status == 0 ? '' : 'busy')?>"><?=CHtml::encode(Plots::getStatus($pl->status))?></p>
             <p class="plot_size">Площадь: <b><?=CHtml::encode($pl->sq)?> кв.м.</b></p>
             <p class="plot_price">Стоимость: <b><?=CHtml::encode($pl->price)?> рублей</b></p>
+            <? if($pl->status == 0):?>
+                <a href="/contact/?pid=<?=$pl->id?>" class="reserve_button">Забронировать участок</a>
+            <? endif; ?>
         </div>
     <? endforeach; ?>
-        <a href="/contact/" class="reserve_button">Забронировать участок</a>
     </div>
 </div>
