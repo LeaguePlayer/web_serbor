@@ -23,6 +23,7 @@
 					array('label'=>'Галлерея', 'url'=>'/admin/photos/update/id/1'),
 					array('label'=>'Карта', 'url'=>'/admin/maps'),
 				)),
+				array('label'=>'Обратная связь', 'url'=>'/admin/feedback'),
 			);
 		?>
 		<?php $this->widget('bootstrap.widgets.TbNavbar', array(

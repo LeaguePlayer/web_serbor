@@ -354,8 +354,16 @@ nav#navigation select option {
 	font-family: Tahoma,Verdana,Arial,sans-serif;
 	color: #666;
 }
-.contact-form span.mandatory {
+.contact-form span.required{
 	color: #ee0000;
+}
+.contact-form .errorMessage{
+	color: #ee0000;
+	font-size: 11px;
+}
+.contact-form .success-alert{
+	color: green;
+	padding: 5px 5px 5px 0;
 }
 .ce_form input, .ce_form textarea {
 	border: 1px solid #bbb;
