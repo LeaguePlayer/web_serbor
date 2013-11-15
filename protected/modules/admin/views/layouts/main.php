@@ -20,6 +20,10 @@
 						array('label'=>'Создать', 'url'=>"/admin/news/create"),
 						array('label'=>'Список', 'url'=>"/admin/news/list"),
 					)),
+					array('label'=>'Сообщения', 'url'=>'#', 'items' => array(
+						array('label'=>'Создать', 'url'=>"/admin/flashbox/create"),
+						array('label'=>'Список', 'url'=>"/admin/flashbox/list"),
+					)),
 					array('label'=>'Галлерея', 'url'=>'/admin/photos/update/id/1'),
 					array('label'=>'Карта', 'url'=>'/admin/maps'),
 				)),
