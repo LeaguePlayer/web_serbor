@@ -37,6 +37,8 @@ class NewsController extends FrontController
 	
 	public function actionIndex()
 	{
+		$this->title = 'Новости - '.$this->title;
+
 		$news  = News::model()->published()->news()->findAll();
 		$smi  = News::model()->published()->smi()->findAll();
 

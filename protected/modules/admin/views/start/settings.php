@@ -24,7 +24,7 @@
                         'empty'=>'Не задано',
                     )); ?>
                 <?php else: ?>
-                    <input class="span3" maxlength="256" name="Settings[<?=$setting->option?>]" id="<?=$setting->option?>" value="<?=$setting->value?>" type="text">
+                    <input class="span3" maxlength="256" name="Settings[<?=$setting->option?>]" id="<?=$setting->option?>" value="<?=CHtml::encode($setting->value)?>" type="text">
                 <?php endif; ?>
             </div>
         </div>

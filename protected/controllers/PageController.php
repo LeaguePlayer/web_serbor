@@ -31,6 +31,10 @@ class PageController extends FrontController
 	{
 		$alias = str_replace('.htm', '', $alias);
 		$page = Page::model()->find('alias=:alias AND status=1', array(':alias'=> $alias));
+
+		//set page title
+		$this->title = $page->title.' - '.$this->title;
+
 		
 		if($page === null) 
 			throw new CHttpException(404, 'Unable to find the requested object.');

@@ -11,7 +11,9 @@ class FrontController extends Controller
 
     public function init() {
         parent::init();
-        $this->title = Yii::app()->name;
+
+        if(Settings::getOption('title'))  $this->title = CHtml::encode(Settings::getOption('title'));
+        else $this->title = Yii::app()->name;
     }
 
     //Check home page

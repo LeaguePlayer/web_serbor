@@ -6,6 +6,7 @@ class MapController extends FrontController
 
 	public function actionIndex()
 	{
+		$this->title = 'План поселка "Серебряный Бор" - '.$this->title;
 		$map = Maps::model()->find();
 
 		$this->render('index', array(

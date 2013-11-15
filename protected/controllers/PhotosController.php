@@ -37,6 +37,7 @@ class PhotosController extends FrontController
 	
 	public function actionIndex()
 	{
+		$this->title = 'Фотографии поселка "Серебряный Бор" - '.$this->title;
 		// $dataProvider=new CActiveDataProvider('Photos');
 		// $this->render('index',array(
 		// 	'dataProvider'=>$dataProvider,
