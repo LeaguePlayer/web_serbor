@@ -31,6 +31,7 @@ var InitMap = {
 			});
 
 			$('body').append("<div class='trash'></div>");
+			$('body').append("<div class='storage'></div>");
 
 			//draw areas
 			if(areas.length){
@@ -40,28 +41,40 @@ var InitMap = {
 					var a = self.paper.path(areas[i].coords).attr({
 						'fill': color,
 						'stroke': 'white',
-						'fill-opacity': 0.6,
+						'fill-opacity': 0.3,
 						'stroke-linejoin': 'round',
 						'stroke-width': 1,
 						'cursor' : 'pointer'
 						//'stroke-width':"5"
 					});
 
+					var box;
+
 					a.data('area-id', areas[i].id);
 
 					if(!areas[i].reserve) {
-						a.click(function(e){
-							var box = $('.area-' + this.data('area-id')).remove();
-							$('body').append(box);
-							box.css({left: e.pageX - 20, top: e.pageY - 30}).show(200);
 
-							box.hover(function(){}, function(){
-								$(this).hide(200);
-							});
+						a.mouseover(function(e){
+
+							box = $('.area-' + this.data('area-id')).remove();
+							$('.storage').append(box);
+							box.css({left: e.pageX - 118, top: e.pageY - 230}).show();
+
+						});
+						
+						a.mouseout(function(){
+							$('.storage .tip_area:visible').stop(true, true).hide();
+						});
+
+						/*a.mouseout(function(){
+							$('.tip_area').fadeOut();
+						});*/
+
+						a.click(function(e){
+
+							id = box.data('area-id');
 
 							//handle click on link
-							box.find('a').on('click', function(){
-								var id = $(this).data('area-id');
 
 								var mapWidth = $('#map').width();
 								var mapHeight = $('#map').height();
@@ -96,7 +109,7 @@ var InitMap = {
 
 										b.css({'left': leftPos, 'top': topPos});
 
-										$('.tip_plots').show(200);
+										$('.tip_plots').fadeIn(200);
 										$('.tip_count').find('img').remove();
 
 										$('.tip_area').fadeOut();
@@ -127,8 +140,8 @@ var InitMap = {
 									}
 								});
 								return false;
-							}); 
 						});
+
 						/*a.hover(function(e){
 							console.log(this.data('area-id'));
 

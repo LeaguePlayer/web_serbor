@@ -46,7 +46,10 @@ class SiteController extends FrontController
 
 				$cs->registerScript('flash-box', "
 					//сюда нужно вставить вызов всплывающего окна (js code)
-					var msg = '$box->msg';
+					
+					var msg = '<div style=\"width: 500px\">$box->msg</div>';
+					$.fancybox.open(msg, {minHeight: 0 });
+
 				", CClientScript::POS_READY);
 			}
 		}

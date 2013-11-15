@@ -26,12 +26,12 @@
 					$cs->registerScript('area'.$a->id, "regions.push({id: $a->id, coords: '$a->coords', reserve: true});");
 				else{
 					$cs->registerScript('area'.$a->id, "regions.push({id: $a->id, coords: '$a->coords', reserve: false});");?>
-                    <div class="tip_area area-<?=$a->id?>">
+                    <div class="tip_area area-<?=$a->id?>" data-area-id="<?=$a->id?>">
                         <p class="tip_count">Участков: <?=$a->countplots?></p>
                         <hr>
                         <p class="tip_free">Свободно: <?=$a->freeplots?></p>
                         <p class="tip_size">Площадь: <?=$a->square?></p>
-                        <a href="#" data-area-id="<?=$a->id?>">Перейти к бронированию</a>
+                        <p class="note">Кликните по участку для перехода к бронированию</p>
                     </div>
 					<?/*var_dump($a->id);
 					var_dump($a->countplots);
@@ -44,3 +44,4 @@
 	?>
 	</div>
 <? endif; ?>
+<!-- <a href="#" data-area-id="<?=$a->id?>">Перейти к бронированию</a> -->

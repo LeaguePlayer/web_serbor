@@ -10,6 +10,8 @@
 	}
 
 	$cs->registerCssFile($this->getAssetsUrl().'/style/init.css');
+	$cs->registerCssFile($this->getAssetsUrl().'/js/fancybox/jquery.fancybox.css');
+	$cs->registerScriptFile($this->getAssetsUrl().'/js/fancybox/jquery.fancybox.pack.js');
 
 	/*$cs = Yii::app()->clientScript;
 	$cs->registerCssFile($this->getAssetsUrl().'/css/style.css');
