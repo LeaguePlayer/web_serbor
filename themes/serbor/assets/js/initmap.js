@@ -37,7 +37,6 @@ var InitMap = {
 			if(areas.length){
 				for(i in areas){
 					var color = areas[i].reserve ? 'red' : 'green';
-
 					var a = self.paper.path(areas[i].coords).attr({
 						'fill': color,
 						'stroke': 'white',
@@ -49,26 +48,29 @@ var InitMap = {
 					});
 
 					var box;
+					var timer;
+					var tx;
+					var ty;
 
 					a.data('area-id', areas[i].id);
 
 					if(!areas[i].reserve) {
-
-						a.mouseover(function(e){
-
+						
+						a.hover(function(e){
 							box = $('.area-' + this.data('area-id')).remove();
 							$('.storage').append(box);
-							box.css({left: e.pageX - 118, top: e.pageY - 230}).show();
-
+							timer = setTimeout(function(){
+								box.css({left: tx - 120, top: ty - box.outerHeight()-40}).fadeIn(200);
+							}, 400);
+						}, function(){
+							$('.storage .tip_area:visible').stop(true, true).fadeOut();
+							clearTimeout(timer);
 						});
 						
-						a.mouseout(function(){
-							$('.storage .tip_area:visible').stop(true, true).hide();
+						a.mousemove(function(pos){
+							tx = pos.pageX;
+							ty = pos.pageY;
 						});
-
-						/*a.mouseout(function(){
-							$('.tip_area').fadeOut();
-						});*/
 
 						a.click(function(e){
 
