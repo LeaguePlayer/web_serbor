@@ -31,12 +31,11 @@ body{
 .tip_area:before {
 	content: "";
 	position: absolute;
-	bottom: -20px;
+	bottom: -10px;
 	left: 110px;
-	border-top: 10px solid #fff;
-	border-right: 10px solid transparent;
-	border-bottom: 10px solid transparent;
-	border-left: 10px solid transparent;
+	width: 20px;
+	height: 10px;
+	background: url(../images/arrow.png) no-repeat 0px 0px;
 }
 
 .tip_area .note {

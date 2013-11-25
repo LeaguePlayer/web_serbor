@@ -56,13 +56,15 @@ var InitMap = {
 
 					if(!areas[i].reserve) {
 						
-						a.hover(function(e){
+						a.mouseover(function(e){
 							box = $('.area-' + this.data('area-id')).remove();
 							$('.storage').append(box);
 							timer = setTimeout(function(){
 								box.css({left: tx - 120, top: ty - box.outerHeight()-40}).fadeIn(200);
 							}, 400);
-						}, function(){
+						});
+
+						a.mouseout(function(){
 							$('.storage .tip_area:visible').stop(true, true).fadeOut();
 							clearTimeout(timer);
 						});
@@ -78,11 +80,11 @@ var InitMap = {
 
 							//handle click on link
 
-								var mapWidth = $('#map').width();
-								var mapHeight = $('#map').height();
+								var mapWidth = $('#mapContainer').width();
+								var mapHeight = $('#mapContainer').height();
 								var scrWidth = $(window).width();
 								var scrHeight = $(window).height();
-								var mapTop = $('#map').offset().top;
+								var mapTop = $('#mapContainer').offset().top;
 
 								var plotsWidth;
 								var plotsHeight;
