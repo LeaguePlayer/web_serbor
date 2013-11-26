@@ -288,7 +288,20 @@ var clickOnArea = function(){
 		type: 'GET',
 		data: {id: id},
 		success: function(r){
-			$.fancybox.open(r);
+
+			$.fancybox.open(r, {
+				beforeClose: function(){
+					var form = $('#area-form').clone();
+
+					form.find('.plot-clone').remove();
+					//button.attr("disabled", "disabled");
+					$.ajax({
+						url: '/admin/maps/areaSave',
+						type: 'POST',
+						data: form.serialize()
+					});
+				}
+			});
 			var count = $('.plots tr').length;
 			//add plot
 			$('.area-block').on('click', '.add-plot', function(){

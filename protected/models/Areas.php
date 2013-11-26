@@ -33,7 +33,7 @@ class Areas extends EActiveRecord
     public function relations()
     {
         return array(
-            'plots'=>array(self::HAS_MANY, 'Plots', 'area_id', 'order' => 'num'),
+            'plots'=>array(self::HAS_MANY, 'Plots', 'area_id'),
         );
     }
 

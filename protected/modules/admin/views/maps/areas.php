@@ -21,31 +21,6 @@ $cs->registerScriptFile($this->getAssetsUrl().'/js/map/map.js', CClientScript::P
 			<div id="mapControls"><a id="up" href="javascript:;"></a><a id="down" href="javascript:;"></a></div>
 		</div>
 	</div>
-	<?/*
-	<div class="span4">
-		<fieldset>
-	        <legend>Области</legend>
-			<div class="area-clone">
-				<? $this->renderPartial('/areas/_form', array('model' => $area));?>
-			</div>
-			<form id="all-data" action="<?=$this->createUrl('maps/save')?>">
-				<div class="areas-block">
-					<?php
-					$cs->registerScript('init', 'var regions = [];', CClientScript::POS_END);
-					if(!empty($all_areas)){
-						foreach ($all_areas as $key => $a) {
-							$this->renderPartial('/areas/_form', array('model' => $a, 'index' => $key));
-							$cs->registerScript('#area'.$key, "regions.push('{$a->coords}');", CClientScript::POS_END);
-						}
-					}
-					?>
-				</div>
-				<div class="row-fluid">
-					<div class="span12"><?php echo TbHtml::button('Сохранить', array('color' => TbHtml::BUTTON_COLOR_SUCCESS, 'class' => 'save-all')); ?></div>
-				</div>
-			</form>
-	    </fieldset>
-	</div>*/?>
 </div>
 <?php
 $cs->registerScript('init', 'var regions = [];', CClientScript::POS_END);
