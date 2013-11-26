@@ -9,7 +9,7 @@
                     'enableClientValidation'=>true,
                     'focus'=>array($model,'fio'),
                 )); ?>
-                <div class="formbody">
+                <div class="formbody" id="contact_form">
                     <div class="success-alert">
                         <?php if(Yii::app()->user->hasFlash('success')) echo Yii::app()->user->getFlash('success'); ?>
                     </div>
