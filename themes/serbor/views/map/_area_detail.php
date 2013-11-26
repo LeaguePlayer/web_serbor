@@ -10,7 +10,7 @@
             <p class="plot_number">№ <?=CHtml::encode($pl->num)?></p>
             <p class="plot_status <?=($pl->status == 0 ? '' : 'busy')?>"><?=CHtml::encode(Plots::getStatus($pl->status))?></p>
             <p class="plot_size">Площадь: <b><?=CHtml::encode($pl->sq)?> кв.м.</b></p>
-            <p class="plot_price">Стоимость: <b><?=number_format(CHtml::encode($pl->price), 3, ' ', ' ')?> рублей</b></p>
+            <p class="plot_price">Стоимость: <b><?=number_format(CHtml::encode($pl->price), 0, ' ', ' ')?> рублей</b></p>
             <? if($pl->status == 0):?>
                 <a href="/contact/?pid=<?=$pl->id?>" class="reserve_button">Забронировать участок</a>
             <? endif; ?>
