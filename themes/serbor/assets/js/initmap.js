@@ -1,12 +1,146 @@
 var InitMap = {
 
-	paper: null,
+	papers: [],
+	plots: null,
 
-	init: function(areas){
-		var mapId = 'map';
-		var imgMap = $('#'+mapId+' img');
-		var mapCont = $('#mapContainer');
+	getTab: function(pos){
+		var self = this;
+		var active = $('.tabs a').eq(pos);
+		var tabid = active.data('tabid');
+		
+		var tab = $('#tab-' + tabid);
+		var imgmap = tab.find('img');
+		var mapid = imgmap.data('mapid');
 
+		
+		if(typeof self.papers[mapid] == 'undefined' ){
+			var tmpimg = new Image();
+			tmpimg.src = imgmap.attr('src');
+			tmpimg.onload = function(){
+				console.log('ok');
+				var oW = this.naturalWidth,
+					oH = this.naturalHeight;
+
+				var cW = this.width,	//current width
+					cH = this.height;	//current height
+
+				var paper = Raphael(tab.attr('id'), oW, oH);
+				paper.image(this.src, 0, 0, oW, oH);
+				//draw plots
+
+				if(self.plots[mapid] && self.plots[mapid].length > 0){
+					
+
+					for(i in self.plots[mapid]){
+						var plot = self.plots[mapid][i];
+						var color = plot.reserve ? 'red' : 'green';
+
+						//closing
+						(function(plot, color){
+							
+							var timerP, timerT;
+							var ajax = false;
+							var tultip = null;
+							var x,y;
+
+							//in out for tultip
+							var inTult = function(){
+								clearTimeout(timerT);
+								// if(tultip && tultip.length > 0) tultip.fadeOut().remove();
+							};
+							var outTult = function(){
+								timerT = setTimeout(function(){
+									if(tultip && tultip.length > 0) tultip.fadeOut().remove();
+								}, 500);
+							};
+
+							//hover events
+							var overPlot = function(e){
+								this.attr({'fill': '#fff'});
+
+								timerP = setTimeout(function(){
+									ajax = true;
+									$.ajax({
+										url: '/map/plotDetail',
+										data: {id: plot.id},
+										type: 'GET',
+										success: function(res){
+											ajax = false;
+											
+											tultip = $(res);
+											$('body').append(tultip);
+											tultip.css({ left: x - (tultip.width() / 2), top: y - tultip.height()-40 }).fadeIn(200);
+											tultip.hover(inTult, outTult);
+											// console.log();
+										},
+										error: function(){ajax = false;}
+									});
+								}, 800);
+							},
+							outPlot = function(e){
+								this.attr({'fill': color});
+								clearTimeout(timerP);
+								timerT = setTimeout(function(){
+									if(tultip && tultip.length > 0) tultip.fadeOut().remove();
+								}, 400);
+								//if(tultip && tultip.length > 0) tultip.remove();
+							},
+							movePlot = function(e){
+								x = e.pageX;
+								y = e.pageY;
+							};
+							
+							var path = paper.path(plot.coords).attr({
+								'fill': color,
+								'stroke': 'white',
+								'fill-opacity': 0.3,
+								'stroke-linejoin': 'round',
+								'stroke-width': 1,
+								'cursor' : 'pointer'
+								//'stroke-width':"5"
+							});
+							path.hover(overPlot, outPlot);
+							//get cuurent mouse coords
+							path.mousemove(movePlot);
+						}) (plot, color);
+					}
+				}
+
+				self.papers[imgmap.data('mapid')] = paper;
+				imgmap.hide();
+			};
+		}
+		return tab;
+	},
+
+	init: function(plots){
+		// var mapId = 'map';
+		// var imgMap = $('#'+mapId+' img');
+		// var mapCont = $('#mapContainer');
+		var self = this;
+
+		// find active tab
+		self.plots = plots;
+		var posActive = $('.tabs a').index($('.tabs .active'));
+		self.getTab(posActive);
+
+		//click on tab
+		$('.tabs a').on('click', function(e){
+			e.preventDefault();
+			var link = $(this);
+			if(!link.hasClass('active')){
+				//remove and add class active
+				var alllink = link.parents('.tabs').find('a');
+				alllink.removeClass('active');
+				link.addClass('active');
+				//show tab
+				$('.maps-box .tab').hide();
+				var tab = self.getTab(alllink.index(link));
+				tab.show();
+			}
+		});
+
+		/*
 		// after load image
 		imgMap[0].onload = function(){
 			//imgMap.hide();
@@ -20,7 +154,7 @@ var InitMap = {
 
 			self.paper = Raphael(mapId, oW, oH);
 			
-    		// self.R.safari();
+			// self.R.safari();
 
 			self.paper.image(imgMap.attr('src'), 0, 0, oW, oH);
 			//self.paper.changeSize(cW, cH, false, true);
@@ -32,15 +166,15 @@ var InitMap = {
 
 			imgMap.hide();
 
-			$("#mapContainer #up").click(function (e) {
-		    	self.panZoom.zoomIn(1);
-		    	e.preventDefault();
-		    });
+			/*$("#mapContainer #up").click(function (e) {
+				self.panZoom.zoomIn(1);
+				e.preventDefault();
+			});
 
-		    $("#mapContainer #down").click(function (e) {
-		    	self.panZoom.zoomOut(1);
-		    	e.preventDefault();
-		    });
+			$("#mapContainer #down").click(function (e) {
+				self.panZoom.zoomOut(1);
+				e.preventDefault();
+			});
 
 			//resize window
 			$(window).resize(function(){
@@ -173,10 +307,10 @@ var InitMap = {
 					}
 				}
 			}
-		};
+		};*/
 	}
 };
 
 jQuery(document).ready(function(){
-	InitMap.init(regions);
+	InitMap.init(plots);
 });

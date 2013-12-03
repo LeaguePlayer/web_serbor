@@ -10,6 +10,33 @@
 	$cs->registerScriptFile($this->getAssetsUrl().'/js/initmap.js', CClientScript::POS_END);
 ?>
 
+<div class="row tabs">
+	<div class="grid_12">
+		<div class="row">
+			<ul class="tabs">
+			<?foreach ($maps as $i => $m):?>
+				<li><a href="#" data-tabid="<?=$i?>"<?=($default == ($i+1) ? ' class="active"' : '')?>><?=$m->name?></a></li>
+			<?endforeach;?>
+			</ul>
+		</div>
+	</div>
+	<div class="grid_12 maps">
+		<div class="maps-box">
+			<?$cs->registerScript('init', 'var plots = [];', CClientScript::POS_END);?>
+			<?foreach ($maps as $i => $m):?>
+				<div id="tab-<?=$i?>" class="tab" <?=($default == ($i+1) ? '' : 'style="display:none;"')?>><img data-mapid="<?=$m->id?>" id="img-<?=$m->id?>" src="/media/images/maps/<?=$m->img_map?>" alt=""></div>
+				<?
+				//crate array plots for always maps
+				$cs->registerScript('map'.$m->id, "plots[$m->id] = [];", CClientScript::POS_END);
+				foreach ($m->plots as $p) {
+					$cs->registerScript('plot'.$p->id, "plots[$m->id].push({id: $p->id, coords: '$p->coords', reserve: {$p->isReserve()}})", CClientScript::POS_END);
+				}
+				?>
+			<?endforeach;?>
+		</div>
+	</div>
+</div>
+<?/*
 <?php if($map): ?>
 	<div class="row">
 		<div id="mapContainer">
@@ -42,7 +69,7 @@
 					<?/*var_dump($a->id);
 					var_dump($a->countplots);
 					var_dump($a->freeplots);
-					var_dump($a->square);*/
+					var_dump($a->square);
 				}
 			}
 				
@@ -50,4 +77,4 @@
 	?>
 	</div>
 <? endif; ?>
-<!-- <a href="#" data-area-id="<?=$a->id?>">Перейти к бронированию</a> -->
+<!-- <a href="#" data-area-id="<?=$a->id?>">Перейти к бронированию</a> -->*/?>

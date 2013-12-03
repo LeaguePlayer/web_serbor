@@ -7,17 +7,20 @@ class MapController extends FrontController
 	public function actionIndex()
 	{
 		$this->title = 'План поселка "Серебряный Бор" - '.$this->title;
-		$map = Maps::model()->find();
+		$maps = Maps::model()->findAll(array('order' => 'name'));
+
+		$default = 1;
 
 		$this->render('index', array(
-			'map' => $map
+			'maps' => $maps,
+			'default' => $default
 		));
 	}
 
-	public function actionAreaDetail($id){
+	public function actionPlotDetail($id){
 		if($id){
-			$area = Areas::model()->findByPk($id);
-			$this->renderPartial('_area_detail', array('area' => $area));
+			$plot = Plots::model()->findByPk($id);
+			$this->renderPartial('_plot_detail', array('plot' => $plot));
 		}
 
 		Yii::app()->end();
@@ -35,7 +38,7 @@ class MapController extends FrontController
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index', 'areaDetail'),
+				'actions'=>array('index', 'plotDetail'),
 				'users'=>array('*'),
 			),
 			array('deny',  // deny all users

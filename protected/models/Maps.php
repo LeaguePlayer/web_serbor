@@ -29,7 +29,7 @@ class Maps extends EActiveRecord
     public function relations()
     {
         return array(
-            'areas'=>array(self::HAS_MANY, 'Areas', 'image_map_id'),
+            'plots'=>array(self::HAS_MANY, 'Plots', 'image_map_id'),
         );
     }
 
@@ -69,7 +69,7 @@ class Maps extends EActiveRecord
 		$criteria->compare('id',$this->id);
 		$criteria->compare('name',$this->name,true);
 		$criteria->compare('img_map',$this->img_map,true);
-        //$criteria->order = 'sort';
+        $criteria->order = 'name';
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,

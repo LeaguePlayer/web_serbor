@@ -269,7 +269,6 @@ var MapControl = {
 
 };
 
-
 //callbacks for areas
 var onArea = function(){
 	this.attr({'fill-opacity': 1, 'fill': 'white'});
@@ -279,16 +278,17 @@ var outArea = function(){
 }
 
 //load area form
-var clickOnArea = function(){
-	var id = this.data('area-id');
-	var aOnMap = this;
+var clickOnPlot = function(){
+	var id = this.data('plot-id');
+	var pOnMap = this;
 
 	$.ajax({
-		url: '/admin/maps/areaForm',
+		url: '/admin/maps/plotForm',
 		type: 'GET',
 		data: {id: id},
 		success: function(r){
 
+			//foolproof
 			$.fancybox.open(r, {
 				beforeClose: function(){
 					var form = $('#area-form').clone();
@@ -296,93 +296,54 @@ var clickOnArea = function(){
 					form.find('.plot-clone').remove();
 					//button.attr("disabled", "disabled");
 					$.ajax({
-						url: '/admin/maps/areaSave',
+						url: '/admin/maps/plotSave',
 						type: 'POST',
 						data: form.serialize()
 					});
 				}
 			});
-			var count = $('.plots tr').length;
-			//add plot
-			$('.area-block').on('click', '.add-plot', function(){
-				var clone = $('.plot-clone').clone();
-				
-				clone.find('input, select').each(function(){
-					var n = $(this).attr('name');
-					$(this).attr('name', n.replace('[]', '[' + count + ']'));
-				});
-				
-				$('.plots').append(clone.removeClass().addClass('plot-tr').show(500));
-				$.fancybox.reposition();
-				count++;
-			});
 
-			//remove plots
-			$('.area-block').on('click', '.remove-plot', function(){
-				if(confirm('Вы уверены?')){
-					var id = $(this).data('id'),
-						aid = $(this).data('area-id');
-					var tr = $(this).closest('.plot-tr');
-
-					if(id && aid){
-						$.ajax({
-							url: '/admin/maps/removePlot',
-							data: {id: id, aid: aid},
-							type: 'GET',
-							success: function(){
-								tr.remove();
-							}
-						});
-					}else tr.remove();
-
-					$.fancybox.reposition();
-				}
-			});
-
-			//save area
-			$('.area-block').on('click', '.save-area', function(){
+			//save plot
+			$('.plot-block').on('click', '.save-plot', function(){
 				var button = $(this);
-				var form = $('#area-form');
+				var form = $('#plot-form');
 
-				$('.plot-clone').remove();
 				button.attr("disabled", "disabled");
 				$.ajax({
-					url: '/admin/maps/areaSave',
+					url: '/admin/maps/plotSave',
 					type: 'POST',
 					data: form.serialize(),
 					success: function(r){
-						var alert = jQuery('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Изменения сохранены</strong></div>');
+						var alert = jQuery('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Изменения сохранены</strong></div>').hide();
 						button.removeAttr("disabled");
-						alert.hide();
-						$('.plots-block').html(r);
 						$('.alert-save').html(alert);
 						alert.slideDown();
 					}
 				});
 			});
 
-			//remove area
-			$('.area-block').on('click', '.remove-area', function(){
-				if(confirm('Вы уверены, что хотите удалить всю область и все ее участки?')){
+			//remove plot
+			$('.plot-block').on('click', '.remove-plot', function(){
+				if(confirm('Вы уверены, что хотите удалить участок?')){
 					var button = $(this).attr("disabled", "disabled");
 					$.ajax({
-						url: '/admin/maps/removeArea',
+						url: '/admin/maps/removePlot',
 						type: 'GET',
 						data: {id: $(this).data('id')},
 						success: function(){
 							$.fancybox.close();
-							aOnMap.remove();
+							pOnMap.remove();
 						}
 					});
 				}
 			});
 		}
 	});
-}
+};
 
 // for front-end
 // render regions on the map
-function renderAreas(regions){
+function renderPlots(regions){
 	if(regions.length > 0){
 
 		for (r_id in regions) {
@@ -394,17 +355,15 @@ function renderAreas(regions){
 				'stroke-width': 1,
 				'cursor' : 'pointer'
 				//'stroke-width':"5"
-			}).data('area-id', regions[r_id].id);
+			}).data('plot-id', regions[r_id].id);
 
-			p.click(clickOnArea);
+			p.click(clickOnPlot);
 			p.hover(onArea, outArea);
 		}
 	}
 }
 
-
 jQuery(document).ready(function(){
-	var count = $('.areas-block .area-row').length;
 
 	MapControl.init('map', {
 		afterAddRegion: function(r, context){
@@ -412,88 +371,21 @@ jQuery(document).ready(function(){
 			r.hover(onArea, outArea);
 
 			$.ajax({
-				url: '/admin/maps/createArea',
+				url: '/admin/maps/createPlot',
 				type: 'POST',
-				data: {Areas:{coords: coords, image_map_id: $('#map').data('map-id')}},
+				data: {Plots:{coords: coords, image_map_id: $('#map').data('map-id')}},
 				success: function(id){
 					id = parseInt(id);
 					if(id > 0){
-						r.data('area-id', id);
-						r.click(clickOnArea);
+						r.data('plot-id', id);
+						r.click(clickOnPlot);
 					}
 				}
 			});
-
-			/*//init elements
-			area_row.find('.coords').val(coord);
-			area_row.data('path', r);
-
-			//set index for elements in Post array
-			area_row.find('input').each(function(){
-				var a = $(this).attr('name');
-				$(this).attr('name', a.replace('[]', '['+count+']'));
-			});
-			count++;*/
-			//add plot for area
-			/*area_row.find('.add-plot').on('click', function(){
-
-			});*/
-
-			//$('.areas-block').append(area_row);
 		}
 	});
 
-	renderAreas(window.regions);
-
-	//send data
-	$('.save-all').on('click', function(){
-		var form = $('#all-data'),
-			data = form.serialize();
-
-		if(data.length > 0){
-			$.ajax({
-				url: form.attr('action'),
-				data: data,
-				type: 'POST',
-				success: function(data){
-					console.log(data);
-				}
-			});
-		}
-	});
-
-	//hover on row
-	$('.area-row').hover(function(){
-		var p = $(this).data('path');
-		console.log(p);
-		p.attr({'fill-opacity': 1, 'fill': 'white',});
-	}, function(){
-		var p = $(this).data('path');
-		p.attr({'fill-opacity': 0.6, 'fill': 'green'});
-	});
-
-	/*$('.plots-block').on('click', '.add-plot', function(){
-		if(confirm('Вы уверены?')){
-			var row = $(this).closest('.area-row');
-			var area_id = row.data('area-id');
-			var rec_id = row.find('.id').val();
-
-			if(rec_id){ //old area, update
-				$.ajax({
-					url: row.data('deleteurl'),
-					type: 'GET',
-					success:function(res){
-						row.data('path').remove();
-						row.remove();
-					}
-				});
-			}else{
-				//MapControl.R.getById(area_id).remove();
-				row.data('path').remove();
-				row.remove();
-			}
-			
-		}
-	});*/
+	//render all Plots
+	renderPlots(window.regions);
 
 });

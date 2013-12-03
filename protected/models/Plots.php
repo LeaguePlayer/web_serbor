@@ -5,7 +5,7 @@
 *
 * The followings are the available columns in table '{{plots}}':
     * @property integer $id
-    * @property integer $area_id
+    * @property integer $image_map_id
     * @property integer $num
     * @property integer $sq
     * @property integer $price
@@ -22,9 +22,10 @@ class Plots extends EActiveRecord
     public function rules()
     {
         return array(
-            array('area_id, num, sq, price, status', 'numerical', 'integerOnly'=>true),
+            array('image_map_id, num, sq, price, status', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
-            array('id, area_id, num, sq, price, status', 'safe', 'on'=>'search'),
+            array('coords', 'safe'),
+            array('id, image_map_id, num, sq, price, status', 'safe', 'on'=>'search'),
         );
     }
 
@@ -45,11 +46,12 @@ class Plots extends EActiveRecord
     {
         return array(
             'id' => 'ID',
-            'area_id' => 'Область',
+            'image_map_id' => 'Карта',
             'num' => '№',
             'sq' => 'Площадь',
             'price' => 'Стоимость',
             'status' => 'Статус',
+            'coords' => 'Координаты',
         );
     }
 
@@ -57,10 +59,11 @@ class Plots extends EActiveRecord
     {
         $criteria=new CDbCriteria;
 		$criteria->compare('id',$this->id);
-		$criteria->compare('area_id',$this->area_id);
+		$criteria->compare('image_map_id',$this->image_map_id);
 		$criteria->compare('num',$this->num);
 		$criteria->compare('sq',$this->sq);
-		$criteria->compare('price',$this->price);
+        $criteria->compare('price',$this->price);
+		$criteria->compare('coords',$this->coords);
 		$criteria->compare('status',$this->status);
         $criteria->order = 'sort';
 
@@ -77,6 +80,12 @@ class Plots extends EActiveRecord
     public function translition()
     {
         return 'Участки';
+    }
+
+    //reserve plot or not
+    public function isReserve(){
+        if($this->status == 0) return 'false';
+        return 'true';
     }
 
     public static function getStatus($i){
