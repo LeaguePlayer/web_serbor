@@ -16,6 +16,7 @@ var InitMap = {
 		if(typeof self.papers[mapid] == 'undefined' ){
 			var tmpimg = new Image();
 			tmpimg.src = imgmap.attr('src');
+			imgmap.show();
 			tmpimg.onload = function(){
 				console.log('ok');
 				var oW = this.naturalWidth,
@@ -24,12 +25,12 @@ var InitMap = {
 				var cW = this.width,	//current width
 					cH = this.height;	//current height
 
-				console.log(tab);
-				
-
 				var paper = Raphael(tab.attr('id'), oW, oH);
 				paper.image(this.src, 0, 0, oW, oH);
 
+				//hide imgmap
+				imgmap.hide();
+				
 				//draw plots
 				if(self.plots[mapid] && self.plots[mapid].length > 0){
 					
@@ -109,7 +110,6 @@ var InitMap = {
 				}
 
 				self.papers[imgmap.data('mapid')] = paper;
-				imgmap.hide();
 			};
 		}
 		return tab;

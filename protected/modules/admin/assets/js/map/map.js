@@ -287,16 +287,20 @@ var clickOnPlot = function(){
 		type: 'GET',
 		data: {id: id},
 		success: function(r){
+			
+			var onDel = false;
 
 			//foolproof
 			$.fancybox.open(r, {
 				beforeClose: function(){
-					var form = $('#plot-form');
-					$.ajax({
-						url: '/admin/maps/plotSave',
-						type: 'POST',
-						data: form.serialize()
-					});
+					if(!onDel){
+						var form = $('#plot-form');
+						$.ajax({
+							url: '/admin/maps/plotSave',
+							type: 'POST',
+							data: form.serialize()
+						});
+					}
 				}
 			});
 
@@ -331,6 +335,7 @@ var clickOnPlot = function(){
 						type: 'GET',
 						data: {id: $(this).data('id')},
 						success: function(){
+							onDel = true;
 							$.fancybox.close();
 							pOnMap.remove();
 						}
