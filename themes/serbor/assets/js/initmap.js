@@ -24,13 +24,15 @@ var InitMap = {
 				var cW = this.width,	//current width
 					cH = this.height;	//current height
 
+				console.log(tab);
+				
+
 				var paper = Raphael(tab.attr('id'), oW, oH);
 				paper.image(this.src, 0, 0, oW, oH);
-				//draw plots
 
+				//draw plots
 				if(self.plots[mapid] && self.plots[mapid].length > 0){
 					
-
 					for(i in self.plots[mapid]){
 						var plot = self.plots[mapid][i];
 						var color = plot.reserve ? 'red' : 'green';

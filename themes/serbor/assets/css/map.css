@@ -230,7 +230,7 @@ body{
 
 /*tabs*/
 .tabs{
-	margin-left: 20px;
+	margin: 10px 0 0 20px;
 }
 .tabs li{
 	float: left;

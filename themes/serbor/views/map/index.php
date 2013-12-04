@@ -13,7 +13,7 @@
 <div class="row tabs">
 	<div class="grid_12">
 		<div class="row">
-			<ul class="tabs">
+			<ul class="tabs clearfix">
 			<?foreach ($maps as $i => $m):?>
 				<li><a href="#" data-tabid="<?=$i?>"<?=($default == ($i+1) ? ' class="active"' : '')?>><?=$m->name?></a></li>
 			<?endforeach;?>

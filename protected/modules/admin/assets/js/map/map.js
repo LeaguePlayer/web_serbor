@@ -291,10 +291,7 @@ var clickOnPlot = function(){
 			//foolproof
 			$.fancybox.open(r, {
 				beforeClose: function(){
-					var form = $('#area-form').clone();
-
-					form.find('.plot-clone').remove();
-					//button.attr("disabled", "disabled");
+					var form = $('#plot-form');
 					$.ajax({
 						url: '/admin/maps/plotSave',
 						type: 'POST',
@@ -318,6 +315,9 @@ var clickOnPlot = function(){
 						button.removeAttr("disabled");
 						$('.alert-save').html(alert);
 						alert.slideDown();
+					},
+					error: function(){
+						button.removeAttr("disabled");
 					}
 				});
 			});

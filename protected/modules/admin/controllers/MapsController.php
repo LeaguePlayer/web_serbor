@@ -34,7 +34,7 @@ class MapsController extends AdminController
 		if(isset($id)){
 			$plot = Plots::model()->findByPk($id);
 
-			$this->renderPartial('/plots/_form', array(
+			$this->renderPartial('/plots/_plot', array(
 				'model' => $plot
 			));
 		}
@@ -61,11 +61,13 @@ class MapsController extends AdminController
 
 	//save plot
 	public function actionPlotSave(){
+
 		if(isset($_POST['Plots'])){
 			$plot = Plots::model()->findByPk($_POST['Plots']['id']);
 			$plot->attributes = $_POST['Plots'];
 
 			$plot->save(false);
+			$this->renderPartial('/plots/_form', array('model' => $plot));
 		}
 
 		Yii::app()->end();
