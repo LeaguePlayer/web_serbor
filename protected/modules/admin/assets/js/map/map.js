@@ -33,80 +33,46 @@ var MapControl = {
 			mapContainer = map.parent(),
 			mW = imageMap[0].naturalWidth,
 			mH = imageMap[0].naturalHeight;
-		// var imageMap = map.find('img'),
-		// 	mW = imageMap.width(),
-		// 	mH = imageMap.height();
-
 
 		self.cc = function(e) { // click on circle
 			var c = self.getCoord(e);
 			self.addPoint(self.R.circle(c.x, c.y, 1).attr({fill: "white"}));
-			/*var els = self.R.getElementsByPoint(c.x, c.y);
-
-			for (var i = els.items.length - 1; i >= 0; i--) {
-				if(els.items[i].type == 'image') {
-					els.items[i].events[0].f(e);
-				}
-			};*/
 		};
 
 		self.move = function(e){
 			var coords = self.getCoord(e);
-			//self.drawRegion();
-			//if(!self.cursorPoint) self.cursorPoint = self.R.circle(coords.x, coords.y, 2).attr({fill: "white"});
-
-			//self.cursorPoint.attr({cx: coords.x, cy: coords.y});
-			// self.cursorPoint.mousemove(function(e){
-			// 	var coords = self.getCoord(e);
-			// 	self.cursorPoint.attr({cx: coords.x, cy: coords.y});
-			// });
-			/*self.cursorPoint.click(function(){
-				self.addPoint(this);
-			});*/
 		};
 
 
 		if(map.length && imageMap.length && Raphael){
 			imageMap.hide();
-			//console.log(imageMap.width());
-			//self.R = new ScaleRaphael(map_id, mW, mH);
-			// self.R.changeSize(mapContainer.width(), mapContainer.height());
+
 			self.R = Raphael(map_id, mW, mH);
 			self.panZoom = self.R.panzoom({ initialZoom: 0, initialPosition: { x: 0, y: 0} });
 
 			self.panZoom.enable();
-    		self.R.safari();
+			self.R.safari();
 
-    		//Zoom controls-----
-    		$("#mapContainer #up").click(function (e) {
-		    	self.panZoom.zoomIn(1);
-		    	e.preventDefault();
-		    });
+			//Zoom controls-----
+			$("#mapContainer #up").click(function (e) {
+				self.panZoom.zoomIn(1);
+				e.preventDefault();
+			});
 
-		    $("#mapContainer #down").click(function (e) {
-		    	self.panZoom.zoomOut(1);
-		    	e.preventDefault();
-		    });
-		    //------Zoom controls
+			$("#mapContainer #down").click(function (e) {
+				self.panZoom.zoomOut(1);
+				e.preventDefault();
+			});
+			//------Zoom controls
 
-		    //Add image on svg
+			//Add image on svg
 			self.imageMap = self.R.image(imageMap.attr('src'), 0, 0, mW, mH);
 
 			//click on map (set point)
 			self.imageMap.mouseup(function(e){
 				if(!self.panZoom.isDragging()){
 					var c = self.getCoord(e);
-					self.addPoint(self.R.circle(c.x, c.y, 1).attr({fill: "white"}));
-					// var coords = self.getCoord(e);
-					// var c = self.R.circle(coords.x, coords.y, 1).attr({fill: "white"});
-					// self.addPoint(c);
-					// console.log(self.getCoord(e));
-					// if(self.tempC){
-					// 	//self.addPoint(self.tempC);
-					// 	self.tempC = false;
-					// }else{
-						
-					// }					
+					self.addPoint(self.R.circle(c.x, c.y, 1).attr({fill: "white"}));					
 				}
 			});
 
@@ -129,8 +95,6 @@ var MapControl = {
 							self.regions.pop().remove();
 						}
 						self.drawRegion();
-						// self.removeRegions();
-						// self.allClear();
 						break;
 				}
 			});
@@ -164,23 +128,9 @@ var MapControl = {
 			});
 			point.mouseover(function(e){
 				this.attr({fill: "red"});
-				/*if(self.stackPoints.length > 1){
-					if(self.tempC){
-						self.tempC.remove();
-						self.stackPoints.pop();
-						self.tempC = false;
-					}
-					self.stackPoints.push(this);
-					self.tempC = false;
-					self.drawRegion();
-				}*/
 			});
 			point.mouseout(function(e){
 				this.attr({fill: "white"});
-				/*if(self.stackPoints.length > 1){
-					self.stackPoints.pop();
-					self.drawRegion();
-				}*/
 			});
 		}
 
@@ -287,7 +237,7 @@ var clickOnPlot = function(){
 		type: 'GET',
 		data: {id: id},
 		success: function(r){
-			
+
 			var onDel = false;
 
 			//foolproof
@@ -332,7 +282,7 @@ var clickOnPlot = function(){
 					var button = $(this).attr("disabled", "disabled");
 					$.ajax({
 						url: '/admin/maps/removePlot',
-						type: 'GET',
+						type: 'POST',
 						data: {id: $(this).data('id')},
 						success: function(){
 							onDel = true;

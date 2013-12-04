@@ -19,6 +19,7 @@ class EActiveRecord extends CActiveRecord
     const STATUS_DEFAULT = self::STATUS_PUBLISH;
 
     public $max_sort;
+    public $deleteSave = true;
 
     public static function getStatusAliases($status = -1)
     {
@@ -189,7 +190,7 @@ class EActiveRecord extends CActiveRecord
 
     public function beforeDelete()
     {
-        if(isset($this->status)){
+        if($this->deleteSave && isset($this->status)){
             if($this->status == self::STATUS_DEFAULT)
             {
                 $this->status = self::STATUS_REMOVED;

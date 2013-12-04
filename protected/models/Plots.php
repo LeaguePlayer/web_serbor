@@ -13,6 +13,8 @@
 */
 class Plots extends EActiveRecord
 {
+    public $deleteSave = false;
+
     public function tableName()
     {
         return '{{plots}}';
@@ -86,6 +88,11 @@ class Plots extends EActiveRecord
     public function isReserve(){
         if($this->status == 0) return 'false';
         return 'true';
+    }
+
+    public function beforeDelete()
+    {
+        return parent::beforeDelete();
     }
 
     public static function getStatus($i){

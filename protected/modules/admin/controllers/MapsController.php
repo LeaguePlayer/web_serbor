@@ -74,11 +74,11 @@ class MapsController extends AdminController
 	}
 
 	//remove plot
-	public function actionRemovePlot($id){
-		$plot = Plots::model()->findByPk($id);
-
-		$plot->delete();
-
+	public function actionRemovePlot(){
+		if(isset($_POST['id'])){
+			$plot = Plots::model()->findByPk($_POST['id']);
+			$plot->delete();
+		}
 		Yii::app()->end();
 	}
 
