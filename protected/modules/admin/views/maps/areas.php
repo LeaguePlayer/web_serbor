@@ -27,7 +27,7 @@ $cs->registerScript('init', 'var regions = [];', CClientScript::POS_END);
 if(!empty($model->plots)){
 	foreach ($model->plots as $key => $a) {
 		//$this->renderPartial('/areas/_form', array('model' => $a, 'index' => $key));
-		$cs->registerScript('#plot'.$key, "regions.push({id: {$a->id}, coords: '{$a->coords}'});", CClientScript::POS_END);
+		$cs->registerScript('#plot'.$key, "regions.push({id: {$a->id}, coords: '{$a->coords}', reserve: {$a->isReserve()}});", CClientScript::POS_END);
 	}
 }
 ?>

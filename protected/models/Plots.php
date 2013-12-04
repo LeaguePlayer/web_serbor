@@ -24,8 +24,9 @@ class Plots extends EActiveRecord
     public function rules()
     {
         return array(
-            array('image_map_id, num, sq, price, status', 'numerical', 'integerOnly'=>true),
+            array('image_map_id, sq, price, status', 'numerical', 'integerOnly'=>true),
             // The following rule is used by search().
+            array('num', 'length', 'max'=>20),
             array('coords', 'safe'),
             array('id, image_map_id, num, sq, price, status', 'safe', 'on'=>'search'),
         );

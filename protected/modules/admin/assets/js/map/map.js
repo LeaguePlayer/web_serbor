@@ -222,10 +222,12 @@ var MapControl = {
 //callbacks for areas
 var onArea = function(){
 	this.attr({'fill-opacity': 1, 'fill': 'white'});
-}
+};
+
 var outArea = function(){
-	this.attr({'fill-opacity': 0.6, 'fill': 'green'});
-}
+	var color = this.data('reserve') ? 'red' : 'green';
+	this.attr({'fill-opacity': 0.6, 'fill': color});
+};
 
 //load area form
 var clickOnPlot = function(){
@@ -265,6 +267,13 @@ var clickOnPlot = function(){
 					type: 'POST',
 					data: form.serialize(),
 					success: function(r){
+						//set color
+						if(r.length > 0){
+							var color = JSON.parse(r) ? color = 'red' : color = 'green';
+							pOnMap.attr({'fill' : color});
+							pOnMap.data('reserve', r);
+						}
+						
 						var alert = jQuery('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">×</button><strong>Изменения сохранены</strong></div>').hide();
 						button.removeAttr("disabled");
 						$('.alert-save').html(alert);
@@ -302,8 +311,9 @@ function renderPlots(regions){
 	if(regions.length > 0){
 
 		for (r_id in regions) {
+			var color = regions[r_id].reserve ? 'red' : 'green';
 			var p = MapControl.R.path(regions[r_id].coords).attr({
-				'fill': 'green',
+				'fill': color,
 				'stroke': 'white',
 				'fill-opacity': 0.6,
 				'stroke-linejoin': 'round',
@@ -311,6 +321,7 @@ function renderPlots(regions){
 				'cursor' : 'pointer'
 				//'stroke-width':"5"
 			}).data('plot-id', regions[r_id].id);
+			p.data('reserve', regions[r_id].reserve);
 
 			p.click(clickOnPlot);
 			p.hover(onArea, outArea);
@@ -330,9 +341,10 @@ jQuery(document).ready(function(){
 				type: 'POST',
 				data: {Plots:{coords: coords, image_map_id: $('#map').data('map-id')}},
 				success: function(id){
-					id = parseInt(id);
 					if(id > 0){
 						r.data('plot-id', id);
+						r.id = id;
+						console.log(r);
 						r.click(clickOnPlot);
 					}
 				}

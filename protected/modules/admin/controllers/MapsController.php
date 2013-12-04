@@ -67,7 +67,8 @@ class MapsController extends AdminController
 			$plot->attributes = $_POST['Plots'];
 
 			$plot->save(false);
-			$this->renderPartial('/plots/_form', array('model' => $plot));
+			echo $plot->isReserve();
+			//$this->renderPartial('/plots/_form', array('model' => $plot));
 		}
 
 		Yii::app()->end();
