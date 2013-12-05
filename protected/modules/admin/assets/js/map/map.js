@@ -341,10 +341,9 @@ jQuery(document).ready(function(){
 				type: 'POST',
 				data: {Plots:{coords: coords, image_map_id: $('#map').data('map-id')}},
 				success: function(id){
+					id = parseInt(id, 10);
 					if(id > 0){
 						r.data('plot-id', id);
-						r.id = id;
-						console.log(r);
 						r.click(clickOnPlot);
 					}
 				}
