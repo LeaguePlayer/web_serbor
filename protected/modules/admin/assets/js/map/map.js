@@ -225,6 +225,7 @@ var onArea = function(){
 };
 
 var outArea = function(){
+	console.log(typeof this.data('reserve'));
 	var color = this.data('reserve') ? 'red' : 'green';
 	this.attr({'fill-opacity': 0.6, 'fill': color});
 };
@@ -269,7 +270,8 @@ var clickOnPlot = function(){
 					success: function(r){
 						//set color
 						if(r.length > 0){
-							var color = JSON.parse(r) ? color = 'red' : color = 'green';
+							r = JSON.parse(r);
+							var color = r ? color = 'red' : color = 'green';
 							pOnMap.attr({'fill' : color});
 							pOnMap.data('reserve', r);
 						}

@@ -96,7 +96,7 @@ var InitMap = {
 							var path = paper.path(plot.coords).attr({
 								'fill': color,
 								'stroke': 'white',
-								'fill-opacity': 0.3,
+								'fill-opacity': 0.4,
 								'stroke-linejoin': 'round',
 								'stroke-width': 1,
 								'cursor' : 'pointer'
