@@ -77,7 +77,7 @@ var InitMap = {
 										},
 										error: function(){ajax = false;}
 									});
-								}, 800);
+								}, 500);
 							},
 							outPlot = function(e){
 								this.attr({'fill': color});
@@ -102,8 +102,9 @@ var InitMap = {
 									$('.maps-box .main-map').addClass('active').show();
 									$(this).hide();
 								}).show();
-								
+
 								if(cur != q){
+									if(tultip && tultip.length > 0) tultip.fadeOut().remove();
 									active.remove('active');
 									$('.maps-box .tab').eq(q).addClass('active');
 									active.hide();
