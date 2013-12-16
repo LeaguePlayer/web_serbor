@@ -5,25 +5,24 @@ var InitMap = {
 
 	getTab: function(pos){
 		var self = this;
-		var active = $('.tabs a').eq(pos);
-		var tabid = active.data('tabid');
+		var active = $('.maps-box .tab').eq(pos);
 		
-		var tab = $('#tab-' + tabid);
+		var tab = $('#tab-' + pos);
 		var imgmap = tab.find('img');
 		var mapid = imgmap.data('mapid');
 
-		
+		console.log(imgmap);
 		if(typeof self.papers[mapid] == 'undefined' ){
 			var tmpimg = new Image();
 			tmpimg.src = imgmap.attr('src');
 			imgmap.show();
 			tmpimg.onload = function(){
-				console.log('ok');
+
 				var oW = this.naturalWidth,
 					oH = this.naturalHeight;
 
-				var cW = this.width,	//current width
-					cH = this.height;	//current height
+				// var cW = this.width,	//current width
+				// 	cH = this.height;	//current height
 
 				var paper = Raphael(tab.attr('id'), oW, oH);
 				paper.image(this.src, 0, 0, oW, oH);
@@ -37,9 +36,10 @@ var InitMap = {
 					for(i in self.plots[mapid]){
 						var plot = self.plots[mapid][i];
 						var color = plot.reserve ? 'red' : 'green';
+						var q = plot.q || false; //number of queue
 
 						//closing
-						(function(plot, color){
+						(function(plot, color, q){
 							
 							var timerP, timerT;
 							var ajax = false;
@@ -65,11 +65,10 @@ var InitMap = {
 									ajax = true;
 									$.ajax({
 										url: '/map/plotDetail',
-										data: {id: plot.id},
+										data: {id: plot.id, q: plot.q},
 										type: 'GET',
 										success: function(res){
 											ajax = false;
-											
 											tultip = $(res);
 											$('body').append(tultip);
 											tultip.css({ left: x - (tultip.width() / 2), top: y - tultip.height()-40 }).fadeIn(200);
@@ -91,6 +90,26 @@ var InitMap = {
 							movePlot = function(e){
 								x = e.pageX;
 								y = e.pageY;
+							},
+							clickOnQ = function(e){
+								var q = this.data('q');
+								var active = $('.tab.active');
+								var cur = $('.maps-box .tab').index(active);
+								
+								$('.back-to-map').click(function(e){
+									e.preventDefault();
+									$('.maps-box .tab.active').removeClass('active').hide();
+									$('.maps-box .main-map').addClass('active').show();
+									$(this).hide();
+								}).show();
+								
+								if(cur != q){
+									active.remove('active');
+									$('.maps-box .tab').eq(q).addClass('active');
+									active.hide();
+									var tab = self.getTab(q);
+									tab.show();
+								}
 							};
 							
 							var path = paper.path(plot.coords).attr({
@@ -102,10 +121,16 @@ var InitMap = {
 								'cursor' : 'pointer'
 								//'stroke-width':"5"
 							});
+
+							if(q){
+								path.data('q',q);
+								path.click(clickOnQ);
+							}
+							
 							path.hover(overPlot, outPlot);
 							//get cuurent mouse coords
 							path.mousemove(movePlot);
-						}) (plot, color);
+						}) (plot, color, q);
 					}
 				}
 
@@ -123,11 +148,11 @@ var InitMap = {
 
 		// find active tab
 		self.plots = plots;
-		var posActive = $('.tabs a').index($('.tabs .active'));
+		var posActive = $('.maps-box .tab').index($('.tab.active'));
 		self.getTab(posActive);
 
 		//click on tab
-		$('.tabs a').on('click', function(e){
+		/*$('.tabs a').on('click', function(e){
 			e.preventDefault();
 			var link = $(this);
 			if(!link.hasClass('active')){
@@ -140,7 +165,7 @@ var InitMap = {
 				var tab = self.getTab(alllink.index(link));
 				tab.show();
 			}
-		});
+		});*/
 
 		/*
 		// after load image

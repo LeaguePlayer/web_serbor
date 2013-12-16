@@ -17,10 +17,10 @@ class MapController extends FrontController
 		));
 	}
 
-	public function actionPlotDetail($id){
+	public function actionPlotDetail($id, $q=false){
 		if($id){
 			$plot = Plots::model()->findByPk($id);
-			$this->renderPartial('_plot_detail', array('plot' => $plot));
+			$this->renderPartial('_plot_detail', array('plot' => $plot, 'q' => $q));
 		}
 
 		Yii::app()->end();

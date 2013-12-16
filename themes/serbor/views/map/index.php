@@ -11,7 +11,7 @@
 ?>
 
 <div class="row tabs">
-	<div class="grid_12">
+	<?/*<div class="grid_12">
 		<div class="row">
 			<ul class="tabs clearfix">
 			<?foreach ($maps as $i => $m):?>
@@ -19,17 +19,21 @@
 			<?endforeach;?>
 			</ul>
 		</div>
-	</div>
+	</div>*/?>
 	<div class="grid_12 maps">
 		<div class="maps-box">
+			<a href="#" class="back-to-map">Вернуться на карту</a>
 			<?$cs->registerScript('init', 'var plots = [];', CClientScript::POS_END);?>
 			<?foreach ($maps as $i => $m):?>
-				<div id="tab-<?=$i?>" class="tab" <?=($default == ($i+1) ? '' : 'style="display:none;"')?>><img data-mapid="<?=$m->id?>" id="img-<?=$m->id?>" src="/media/images/maps/<?=$m->img_map?>" alt=""></div>
+				<div id="tab-<?=$i?>" class="tab <?=($i == 0 ? ' main-map active' : '')?>" <?=($default == ($i+1) ? '' : 'style="display:none;"')?>><img data-mapid="<?=$m->id?>" id="img-<?=$m->id?>" src="/media/images/maps/<?=$m->img_map?>" alt=""></div>
 				<?
 				//crate array plots for always maps
 				$cs->registerScript('map'.$m->id, "plots[$m->id] = [];", CClientScript::POS_END);
 				foreach ($m->plots as $p) {
-					$cs->registerScript('plot'.$p->id, "plots[$m->id].push({id: $p->id, coords: '$p->coords', reserve: {$p->isReserve()}})", CClientScript::POS_END);
+					if($i == 0)
+						$cs->registerScript('plot'.$p->id, "plots[$m->id].push({id: $p->id, coords: '$p->coords', reserve: {$p->isReserve()}, q: {$p->num}})", CClientScript::POS_END);
+					else
+						$cs->registerScript('plot'.$p->id, "plots[$m->id].push({id: $p->id, coords: '$p->coords', reserve: {$p->isReserve()}})", CClientScript::POS_END);
 				}
 				?>
 			<?endforeach;?>
