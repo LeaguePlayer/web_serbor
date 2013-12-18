@@ -11,7 +11,6 @@ var InitMap = {
 		var imgmap = tab.find('img');
 		var mapid = imgmap.data('mapid');
 
-		console.log(imgmap);
 		if(typeof self.papers[mapid] == 'undefined' ){
 			var tmpimg = new Image();
 			tmpimg.src = imgmap.attr('src');
@@ -73,7 +72,6 @@ var InitMap = {
 											$('body').append(tultip);
 											tultip.css({ left: x - (tultip.width() / 2), top: y - tultip.height()-40 }).fadeIn(200);
 											tultip.hover(inTult, outTult);
-											// console.log();
 										},
 										error: function(){ajax = false;}
 									});
@@ -208,7 +206,6 @@ var InitMap = {
 			$(window).resize(function(){
 				var row = mapCont.parent();
 
-				console.log(row.width(), row.height());
 				self.paper.changeSize(row.width()-22, row.height()-22, false, true);
 			});
 
