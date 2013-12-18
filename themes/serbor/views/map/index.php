@@ -4,9 +4,9 @@
 	$cs->registerCssFile($this->getAssetsUrl().'/css/map.css');
 
 	$cs->registerScriptFile($this->getAssetsUrl().'/js/raphael.js', CClientScript::POS_END);
-	$cs->registerScriptFile($this->getAssetsUrl().'/js/scale.raphael.js', CClientScript::POS_END);
-	$cs->registerScriptFile($this->getAssetsUrl().'/js/jquery.mousewheel-3.0.6.pack.js', CClientScript::POS_END);
-	$cs->registerScriptFile($this->getAssetsUrl().'/js/jquery.panzoom.min.js', CClientScript::POS_END);
+	//$cs->registerScriptFile($this->getAssetsUrl().'/js/scale.raphael.js', CClientScript::POS_END);
+	//$cs->registerScriptFile($this->getAssetsUrl().'/js/jquery.mousewheel-3.0.6.pack.js', CClientScript::POS_END);
+	//$cs->registerScriptFile($this->getAssetsUrl().'/js/jquery.panzoom.min.js', CClientScript::POS_END);
 	$cs->registerScriptFile($this->getAssetsUrl().'/js/initmap.js', CClientScript::POS_END);
 ?>
 
