@@ -35,7 +35,8 @@
 		<meta charset="utf-8" />
 		<meta content="index,follow" name="robots">
     	<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
-
+		<meta http-equiv="X-UA-Compatible" content="IE=8" />
+		
     	<link href="/files/images/site/favicon.ico" rel="shortcut icon">
 		
 		<title><?php echo $this->title; ?></title>

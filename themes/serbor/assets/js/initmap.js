@@ -17,8 +17,9 @@ var InitMap = {
 			imgmap.show();
 			tmpimg.onload = function(){
 
-				var oW = this.naturalWidth,
-					oH = this.naturalHeight;
+
+				var oW = this.width,
+					oH = this.height;
 
 				// var cW = this.width,	//current width
 				// 	cH = this.height;	//current height
@@ -36,7 +37,7 @@ var InitMap = {
 						var plot = self.plots[mapid][i];
 						var color = plot.reserve ? 'red' : 'green';
 						var q = plot.q || false; //number of queue
-
+						
 						//closing
 						(function(plot, color, q){
 							
@@ -86,8 +87,8 @@ var InitMap = {
 								//if(tultip && tultip.length > 0) tultip.remove();
 							},
 							movePlot = function(e){
-								x = e.pageX;
-								y = e.pageY;
+								x = e.clientX;
+								y = e.clientY;
 							},
 							clickOnQ = function(e){
 								var q = this.data('q');
@@ -136,6 +137,9 @@ var InitMap = {
 				self.papers[imgmap.data('mapid')] = paper;
 			};
 			tmpimg.src = imgmap.attr('src');
+			/*if($.browser.msie && parseInt($.browser.version, 10) >= 9) {
+			    imgmap.attr("src", imgmap.attr("src"));
+			}else*/
 		}
 		return tab;
 	},
