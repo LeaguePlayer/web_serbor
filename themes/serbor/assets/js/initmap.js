@@ -13,7 +13,7 @@ var InitMap = {
 
 		if(typeof self.papers[mapid] == 'undefined' ){
 			var tmpimg = new Image();
-			tmpimg.src = imgmap.attr('src');
+
 			imgmap.show();
 			tmpimg.onload = function(){
 
@@ -135,6 +135,7 @@ var InitMap = {
 
 				self.papers[imgmap.data('mapid')] = paper;
 			};
+			tmpimg.src = imgmap.attr('src');
 		}
 		return tab;
 	},
