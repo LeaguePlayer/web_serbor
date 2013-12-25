@@ -18,14 +18,19 @@ var InitMap = {
 			tmpimg.onload = function(){
 
 
-				var oW = this.width,
-					oH = this.height;
+				var oW = this.naturalWidth,
+					oH = this.naturalHeight;
 
+				if($.browser.msie && parseInt($.browser.version, 10) >= 8) {
+					oW = this.width,
+					oH = this.height;
+				}
 				// var cW = this.width,	//current width
 				// 	cH = this.height;	//current height
 
 				var paper = Raphael(tab.attr('id'), oW, oH);
 				paper.image(this.src, 0, 0, oW, oH);
+
 
 				//hide imgmap
 				imgmap.hide();
