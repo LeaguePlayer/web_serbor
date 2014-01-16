@@ -57,7 +57,7 @@ class Date extends CComponent{
             $date = $date + ($this->offset * 3600);
         }
 
-        return gmdate("Y-m-d H:i:s", $date);
+        return date("Y-m-d H:i:s", $date);
     }
     /**
      * Method to get current Unix timestamp optionally in local timezone
@@ -106,6 +106,7 @@ class Date extends CComponent{
         if($local){
             $date = $date + ($this->offset * 3600);
         }
+
 
         return gmdate("Y-m-d", $date);
     }

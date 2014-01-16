@@ -87,7 +87,7 @@ class News extends EActiveRecord
 		$criteria->compare('sort',$this->sort);
 		$criteria->compare('create_time',$this->create_time);
 		$criteria->compare('update_time',$this->update_time);
-        $criteria->order = 'sort';
+        $criteria->order = 'dt_date DESC';
 
         return new CActiveDataProvider($this, array(
             'criteria'=>$criteria,
@@ -115,7 +115,7 @@ class News extends EActiveRecord
 	{
 		parent::afterFind();
 		if ( in_array($this->scenario, array('insert', 'update')) ) { 
-			$this->dt_date = ($this->dt_date !== '0000-00-00' ) ? date('d-m-Y', strtotime($this->dt_date)) : '';
+            $this->dt_date = ($this->dt_date !== '0000-00-00' ) ? date('d.m.Y', strtotime($this->dt_date)) : '';
 		}
 	}
 

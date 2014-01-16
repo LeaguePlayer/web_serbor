@@ -37,12 +37,14 @@ class NewsController extends FrontController
 	
 	public function actionIndex()
 	{
+		$criteria = new CDbCriteria;
+		$criteria->order = 'dt_date DESC';
+		
 		$this->title = 'Новости - '.$this->title;
 
-		$news  = News::model()->published()->news()->findAll();
-		$smi  = News::model()->published()->smi()->findAll();
+		$news  = News::model()->published()->news()->findAll($criteria);
+		$smi  = News::model()->published()->smi()->findAll($criteria);
 
-		$dataProvider=new CActiveDataProvider('News');
 		$this->render('index',array(
 			'news'=>$news,
 			'smi'=>$smi,

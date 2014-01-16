@@ -14,10 +14,13 @@
 			'model' => $model,
 			'attribute' => 'dt_date',
 			'pluginOptions' => array(
-				'format' => 'dd-MM-yyyy',
+				'format' => 'dd.MM.yyyy',
 				'language' => 'ru',
                 'pickSeconds' => false,
                 'pickTime' => false
+			),
+			'htmlOptions' => array(
+				'value' => $model->dt_date ? $model->dt_date : gmdate('d.m.Y')
 			)
 		)); ?>
 		<?php echo $form->error($model, 'dt_date'); ?>
