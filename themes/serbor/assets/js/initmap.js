@@ -93,7 +93,7 @@ var InitMap = {
 							},
 							movePlot = function(e){
 								x = e.clientX;
-								y = e.clientY;
+								y = e.clientY + jQuery(window).scrollTop();
 							},
 							clickOnQ = function(e){
 								var q = this.data('q');
