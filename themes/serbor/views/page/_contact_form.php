@@ -5,13 +5,16 @@
             <div class="ce_form offset_3 grid_9 tableless block">
                 <?php $form = $this->beginWidget('CActiveForm', array(
                     'id'=>'contact-form',
-                    'enableAjaxValidation'=>true,
+                    'enableAjaxValidation'=>false,
                     'enableClientValidation'=>true,
                     'focus'=>array($model,'fio'),
                 )); ?>
                 <div class="formbody" id="contact_form">
                     <div class="success-alert">
-                        <?php if(Yii::app()->user->hasFlash('success')) echo Yii::app()->user->getFlash('success'); ?>
+                        <?php if(Yii::app()->user->hasFlash('success')) {
+                            echo Yii::app()->user->getFlash('success');
+                            Yii::app()->clientScript->registerScript('reachYndexGoal', "$(window).load(function() { yaCounter23844511.reachGoal('SUCCESS_ORDER'); });", CClientScript::POS_END);
+                        } ?>
                     </div>
 
                     <?php echo $form->labelEx($model,'fio'); ?>

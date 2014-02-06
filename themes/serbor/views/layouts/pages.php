@@ -9,7 +9,7 @@
             <div class="row">
                 <div class="grid_9 main-info">
                     <span class="phone-area">+7 3452</span>
-                    <span class="phone-main">71-78-75</span>
+                    <span class="phone-main">60-33-82, 71-78-75</span>
                     <?php $this->renderPartial('//page/social_links')?>
                 </div>
                 <div class="grid_9 main-menu">
